@@ -33,3 +33,5 @@
 
 # Visual Studio Cache Directory
 .vs/
+Debug/
+Release/
