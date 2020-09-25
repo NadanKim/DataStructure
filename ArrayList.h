@@ -2,6 +2,7 @@
 
 class ArrayList
 {
+	//¡÷ºÆ
 public:
 	ArrayList();
 	ArrayList(ArrayList& other);
