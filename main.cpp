@@ -5,13 +5,34 @@
 int main()
 {
     ArrayList a;
+    a.Add(3);
+    a.Add(67);
+    a.Add(3);
+    a.Add(67);
+    a.Add(3);
+    a.Add(67);
+    a.Add(3);
+    a.Add(67);
+    a.Add(3);
+    a.Add(67);
+    a.Add(3);
     a.PrintInfo();
 
-    ArrayList b(30);
-
-    b.Item(0) = 30;
+    ArrayList b;
+    b.Add(3333);
+    b.AddRange(a);
+    b.Add(11111);
+    b.AddRange(a);
     b.PrintInfo();
 
-    ArrayList c(b);
+    ArrayList c;
+    c.Add(123456);
+    c.AddRange(b);
     c.PrintInfo();
+
+    a.Insert(2, 444);
+    a.PrintInfo();
+
+    a.InsertRange(3, c);
+    a.PrintInfo();
 }

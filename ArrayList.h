@@ -8,19 +8,20 @@ public:
 #pragma region 생성자
 	ArrayList(size_t capacity = 10);
 	ArrayList(const ArrayList& other);
+	~ArrayList();
 #pragma endregion
 
 #pragma region 속성
 	const size_t Capacity() { return m_capacity; }
 	const size_t Count() { return m_count; }
-	int& Item(int index) { return m_items[index]; }
+	int& Item(int index) { return index < m_count ? m_items[index] : throw std::out_of_range("index"); }
 #pragma endregion
 
 #pragma region 메소드
 	int Add(int value);
 	void AddRange(const ArrayList& other);
 	void Insert(int index, int value);
-	void InsertRange(int index, ArrayList& other);
+	void InsertRange(int index, const ArrayList& other);
 
 	void Remove(int value);
 	void RemoveAt(int index);
@@ -32,6 +33,13 @@ public:
 	int LastIndexOf(int value);
 
 	void PrintInfo();
+#pragma endregion
+
+#pragma region Class Util
+private:
+	bool IsNeedToResize(int insertCount = 1);
+	void Resize();
+	void MoveToRight(int index, int insertCount = 1);
 #pragma endregion
 
 private:
