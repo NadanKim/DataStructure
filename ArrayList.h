@@ -40,6 +40,7 @@ private:
 	bool IsNeedToResize(int insertCount = 1);
 	void Resize();
 	void MoveToRight(int index, int insertCount = 1);
+	void MoveToLeft(int index, int removeCount = 1);
 #pragma endregion
 
 private:

@@ -20,9 +20,7 @@ int main()
 
     ArrayList b;
     b.Add(3333);
-    b.AddRange(a);
     b.Add(11111);
-    b.AddRange(a);
     b.PrintInfo();
 
     ArrayList c;
@@ -30,9 +28,17 @@ int main()
     c.AddRange(b);
     c.PrintInfo();
 
-    a.Insert(2, 444);
+    a.Remove(67);
+    a.Remove(67);
+    a.Remove(67);
+    a.Remove(67);
+    a.Remove(67);
+    a.Remove(67);
     a.PrintInfo();
 
-    a.InsertRange(3, c);
-    a.PrintInfo();
+    b.RemoveRange(1, 0);
+    b.PrintInfo();
+
+    c.Clear();
+    c.PrintInfo();
 }

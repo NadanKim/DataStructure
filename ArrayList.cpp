@@ -67,7 +67,7 @@ void ArrayList::AddRange(const ArrayList& other)
 /// <param name="value">추가할 값</param>
 void ArrayList::Insert(int index, int value)
 {
-	if (index > m_count)
+	if (index < 0 || index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -89,7 +89,7 @@ void ArrayList::Insert(int index, int value)
 /// <param name="other">추가할 다른 ArrayList</param>
 void ArrayList::InsertRange(int index, const ArrayList& other)
 {
-	if (index > m_count)
+	if (index < 0 || index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -104,23 +104,73 @@ void ArrayList::InsertRange(int index, const ArrayList& other)
 	{
 		m_items[index + i] = other.m_items[i];
 	}
-	m_count += other.m_count;
 }
 
+/// <summary>
+/// ArrayList에서 가장 먼저 발견되는 값을 제거한다.
+/// </summary>
+/// <param name="value">제거할 값</param>
 void ArrayList::Remove(int value)
 {
+	// 저장된 값에서 지정된 값의 인덱스를 찾아 제거한다.
+	for (int i = 0; i < m_count; i++)
+	{
+		if (m_items[i] == value)
+		{
+			MoveToLeft(i);
+			return;
+		}
+	}
 }
 
+/// <summary>
+/// ArrayList에서 지정된 인덱스의 값을 제거한다.
+/// </summary>
+/// <param name="index">제거할 인덱스(조건: 0이상)</param>
 void ArrayList::RemoveAt(int index)
 {
+	if (index < 0 || index >= m_count)
+	{
+		throw std::out_of_range("index");
+	}
+
+	MoveToLeft(index);
 }
 
+/// <summary>
+/// ArrayList에서 지정된 범위의 값을 제거한다.
+/// </summary>
+/// <param name="index">제거할 범위의 시작 인덱스</param>
+/// <param name="count">제거할 값 개수</param>
 void ArrayList::RemoveRange(int index, int count)
 {
+	if (index < 0)
+	{
+		throw std::out_of_range("index");
+	}
+	else if (count < 0)
+	{
+		throw std::out_of_range("count");
+	}
+
+	if (index >= m_count)
+	{
+		throw std::invalid_argument("index");
+	}
+	else if (count > m_count - index)
+	{
+		throw std::invalid_argument("count");
+	}
+
+	MoveToLeft(index, count);
 }
 
+/// <summary>
+/// ArrayList의 모든 값을 제거한다.
+/// </summary>
 void ArrayList::Clear()
 {
+	m_count = 0;
 }
 
 bool ArrayList::Contains(int value)
@@ -192,5 +242,20 @@ void ArrayList::MoveToRight(int index, int insertCount)
 	{
 		m_items[i + insertCount] = m_items[i];
 	}
+	m_count += insertCount;
+}
+
+/// <summary>
+/// 제거 이후 빈 공간 제거를 위해 값을 왼쪽으로 이동시킨다.
+/// </summary>
+/// <param name="index">데이터를 삭제할 인덱스</param>
+/// <param name="removeCount">삭제할 값의 개수(기본: 1)</param>
+void ArrayList::MoveToLeft(int index, int removeCount)
+{
+	for (int i = index; i < m_count - removeCount; i++)
+	{
+		m_items[i] = m_items[i + removeCount];
+	}
+	m_count -= removeCount;
 }
 #pragma endregion
