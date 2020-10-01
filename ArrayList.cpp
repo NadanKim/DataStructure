@@ -112,14 +112,10 @@ void ArrayList::InsertRange(int index, const ArrayList& other)
 /// <param name="value">제거할 값</param>
 void ArrayList::Remove(int value)
 {
-	// 저장된 값에서 지정된 값의 인덱스를 찾아 제거한다.
-	for (int i = 0; i < m_count; i++)
+	int index = IndexOf(value);
+	if (index != -1)
 	{
-		if (m_items[i] == value)
-		{
-			MoveToLeft(i);
-			return;
-		}
+		MoveToLeft(index);
 	}
 }
 
@@ -173,30 +169,59 @@ void ArrayList::Clear()
 	m_count = 0;
 }
 
+/// <summary>
+/// ArrayList에 지정한 값이 존재하는지 확인한다.
+/// </summary>
+/// <param name="value">ArrayList에서 찾을 값</param>
+/// <returns>값의 존재 여부</returns>
 bool ArrayList::Contains(int value)
 {
-	return false;
+	return IndexOf(value) != -1;
 }
 
+/// <summary>
+/// ArryList을 앞에서 부터 지정한 값을 검사해 인덱스를 반환한다.
+/// </summary>
+/// <param name="value">ArrayList에서 잦을 값</param>
+/// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::IndexOf(int value)
 {
-	return 0;
+	for (int i = 0; i < m_count; i++)
+	{
+		if (m_items[i] == value)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
+/// <summary>
+/// ArryList을 뒤에서 부터 지정한 값을 검사해 인덱스를 반환한다.
+/// </summary>
+/// <param name="value">ArrayList에서 잦을 값</param>
+/// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::LastIndexOf(int value)
 {
-	return 0;
+	for (int i = m_count - 1; i >= 0; i--)
+	{
+		if (m_items[i] == value)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
-void ArrayList::PrintInfo()
+void ArrayList::PrintInfo(bool isShowAll)
 {
 	std::cout << "Capacity: " << m_capacity << std::endl;
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Items: ";
-	for (int i = 0; i < m_capacity; i++)
+	for (int i = 0, limit = isShowAll ? m_capacity : m_count; i < m_count; i++)
 	{
 		std::cout << m_items[i] << ", ";
 	}

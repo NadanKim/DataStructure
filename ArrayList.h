@@ -32,7 +32,7 @@ public:
 	int IndexOf(int value);
 	int LastIndexOf(int value);
 
-	void PrintInfo();
+	void PrintInfo(bool isShowAll = false);
 #pragma endregion
 
 #pragma region Class Util

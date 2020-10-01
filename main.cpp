@@ -41,4 +41,9 @@ int main()
 
     c.Clear();
     c.PrintInfo();
+
+    std::cout << a.IndexOf(3) << std::endl;
+    std::cout << std::boolalpha << a.Contains(67) << std::endl;
+    std::cout << a.IndexOf(67) << std::endl;
+    std::cout << a.LastIndexOf(3) << std::endl;
 }
