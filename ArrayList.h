@@ -6,15 +6,21 @@ class ArrayList
 {
 public:
 #pragma region 생성자
-	ArrayList(size_t capacity = 10);
+	ArrayList(int capacity = 10);
 	ArrayList(const ArrayList& other);
 	~ArrayList();
 #pragma endregion
 
 #pragma region 속성
-	const size_t Capacity() { return m_capacity; }
-	const size_t Count() { return m_count; }
-	int& Item(int index) { return index < m_count ? m_items[index] : throw std::out_of_range("index"); }
+	const int Capacity() { return m_capacity; }
+	const int Count() { return m_count; }
+	int& Item(int index) { 
+		if (index < 0 || index >= m_count)
+		{
+			throw std::out_of_range("index");
+		}
+		return m_items[index];
+	}
 #pragma endregion
 
 #pragma region 메소드

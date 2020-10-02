@@ -1,12 +1,24 @@
 ﻿#include "ArrayList.h"
 
 #pragma region 생성자
-ArrayList::ArrayList(size_t capacity)
+/// <summary>
+/// 비어있고 초기 용량을 가지는 ArrayList를 생성한다.
+/// </summary>
+/// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
+ArrayList::ArrayList(int capacity)
 	: m_capacity(capacity), m_count(0)
 {
+	if (capacity < 0)
+	{
+		throw std::out_of_range("capacity");
+	}
 	m_items = new int[m_capacity] {0};
 }
 
+/// <summary>
+/// 다른 ArrayList와 동일한 값을 가지는 ArrayList를 생성한다.
+/// </summary>
+/// <param name="other">기준이 될 ArrayList</param>
 ArrayList::ArrayList(const ArrayList& other)
 	: ArrayList(other.m_capacity)
 {
@@ -17,6 +29,9 @@ ArrayList::ArrayList(const ArrayList& other)
 	}
 }
 
+/// <summary>
+/// 메모리 누수를 막기 위해 동적 생성한 데이터 영역을 제거한다.
+/// </summary>
 ArrayList::~ArrayList()
 {
 	if (m_items != nullptr)
