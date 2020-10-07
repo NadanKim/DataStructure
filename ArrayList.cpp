@@ -41,7 +41,7 @@ ArrayList::~ArrayList()
 }
 #pragma endregion
 
-#pragma region 메소드
+#pragma region 메서드
 /// <summary>
 /// ArrayList의 끝에 값을 추가한다.
 /// </summary>

@@ -23,7 +23,7 @@ public:
 	}
 #pragma endregion
 
-#pragma region 메소드
+#pragma region 메서드
 	int Add(int value);
 	void AddRange(const ArrayList& other);
 	void Insert(int index, int value);
