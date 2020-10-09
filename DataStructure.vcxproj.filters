@@ -5,6 +5,9 @@
     <ClCompile Include="ArrayList\ArrayList.cpp">
       <Filter>ArrayList</Filter>
     </ClCompile>
+    <ClCompile Include="LinkedList\SinglyLinkedList.cpp">
+      <Filter>LinkedList</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -17,6 +20,9 @@
   <ItemGroup>
     <ClInclude Include="ArrayList\ArrayList.h">
       <Filter>ArrayList</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList\SinglyLinkedList.h">
+      <Filter>LinkedList</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
