@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 
 struct SinglyLinkedListNode
@@ -9,18 +9,18 @@ struct SinglyLinkedListNode
 
 class SinglyLinkedList
 {
-#pragma region »ı¼ºÀÚ
+#pragma region ìƒì„±ì
 	SinglyLinkedList();
 	SinglyLinkedList(const SinglyLinkedList& other);
 	~SinglyLinkedList();
 #pragma endregion
 
-#pragma region ¼Ó¼º
+#pragma region ì†ì„±
 	const int Count() { return m_count; }
 	SinglyLinkedListNode& Front() { return *m_head; }
 #pragma endregion
 
-#pragma region ¸Ş¼­µå
+#pragma region ë©”ì„œë“œ
 	void Add(int value);
 	void Add(SinglyLinkedListNode& node);
 	void Insert(int index, int value);
@@ -39,7 +39,7 @@ class SinglyLinkedList
 #pragma endregion
 
 private:
-#pragma region º¯¼ö
+#pragma region ë³€ìˆ˜
 	size_t m_count;
 	SinglyLinkedListNode* m_head;
 #pragma endregion

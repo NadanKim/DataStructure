@@ -1,9 +1,9 @@
-#include "SinglyLinkedList.h"
+ï»¿#include "SinglyLinkedList.h"
 
-#pragma region »ı¼ºÀÚ
+#pragma region ìƒì„±ì
 #pragma endregion
 
-#pragma region ¸Ş¼­µå
+#pragma region ë©”ì„œë“œ
 void SinglyLinkedList::PrintInfo()
 {
 	std::cout << "Count: " << m_count << std::endl;
