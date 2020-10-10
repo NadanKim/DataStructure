@@ -9,10 +9,10 @@ struct SinglyLinkedListNode
 
 class SinglyLinkedList
 {
+public:
 #pragma region 생성자
 	SinglyLinkedList();
 	SinglyLinkedList(const SinglyLinkedList& other);
-	~SinglyLinkedList();
 #pragma endregion
 
 #pragma region 속성

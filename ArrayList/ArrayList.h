@@ -41,15 +41,14 @@ public:
 	void PrintInfo(bool isShowAll = false);
 #pragma endregion
 
-#pragma region Class Util
 private:
+#pragma region Class Util
 	bool IsNeedToResize(int insertCount = 1);
 	void Resize();
 	void MoveToRight(int index, int insertCount = 1);
 	void MoveToLeft(int index, int removeCount = 1);
 #pragma endregion
 
-private:
 #pragma region 변수
 	size_t m_capacity;
 	size_t m_count;
