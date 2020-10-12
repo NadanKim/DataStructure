@@ -94,7 +94,6 @@ void ArrayList::Insert(int index, int value)
 
 	MoveToRight(index);
 	m_items[index] = value;
-	m_count++;
 }
 
 /// <summary>
