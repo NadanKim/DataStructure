@@ -49,10 +49,7 @@ SinglyLinkedList::~SinglyLinkedList()
 void SinglyLinkedList::Add(int value)
 {
 	SinglyLinkedListNode* newNode = new SinglyLinkedListNode(value);
-	newNode->m_next = m_head;
-	m_head = newNode;
-
-	m_count++;
+	Add(newNode);
 }
 
 /// <summary>
@@ -79,37 +76,8 @@ void SinglyLinkedList::Add(SinglyLinkedListNode* node)
 /// <param name="value">추가할 값</param>
 void SinglyLinkedList::Insert(int index, int value)
 {
-	if (index < 0)
-	{
-		throw std::out_of_range("index");
-	}
-
-	if (index > m_count)
-	{
-		index = m_count;
-	}
-
-	SinglyLinkedListNode* prevNode = nullptr;
-	SinglyLinkedListNode* curNode = m_head;
-	while (index--)
-	{
-		prevNode = curNode;
-		curNode = curNode->m_next;
-	}
-
 	SinglyLinkedListNode* newNode = new SinglyLinkedListNode(value);
-	newNode->m_next = curNode;
-
-	if (prevNode == nullptr)
-	{
-		m_head = newNode;
-	}
-	else
-	{
-		prevNode->m_next = newNode;
-	}
-
-	m_count++;
+	Insert(index, newNode);
 }
 
 /// <summary>
