@@ -1,10 +1,14 @@
 ﻿#pragma once
+#include <xutility>
 #include <iostream>
 
 struct SinglyLinkedListNode
 {
-	int m_data;
-	SinglyLinkedListNode* m_next;
+	SinglyLinkedListNode() {}
+	SinglyLinkedListNode(int value) { m_data = value; }
+
+	int m_data = 0;
+	SinglyLinkedListNode* m_next = nullptr;
 };
 
 class SinglyLinkedList
@@ -13,6 +17,7 @@ public:
 #pragma region 생성자
 	SinglyLinkedList();
 	SinglyLinkedList(const SinglyLinkedList& other);
+	~SinglyLinkedList();
 #pragma endregion
 
 #pragma region 속성
@@ -22,12 +27,12 @@ public:
 
 #pragma region 메서드
 	void Add(int value);
-	void Add(SinglyLinkedListNode& node);
+	void Add(SinglyLinkedListNode* node);
 	void Insert(int index, int value);
-	void Insert(int index, SinglyLinkedListNode& node);
+	void Insert(int index, SinglyLinkedListNode* node);
 
 	void Remove(int index, int value);
-	void Remove(int index, const SinglyLinkedListNode& node);
+	void Remove(int index, const SinglyLinkedListNode* node);
 	void Clear();
 
 	bool Contains(int value);

@@ -45,7 +45,7 @@ ArrayList::~ArrayList()
 /// <summary>
 /// ArrayList의 끝에 값을 추가한다.
 /// </summary>
-/// <param name="value">ArrayList 끝에 추가할 값</param>
+/// <param name="value">추가할 값</param>
 /// <returns>값이 추가된 인덱스</returns>
 int ArrayList::Add(int value)
 {
@@ -61,7 +61,7 @@ int ArrayList::Add(int value)
 /// <summary>
 /// ArrayList의 끝에 다른 ArrayList를 추가한다.
 /// </summary>
-/// <param name="other">ArrayList 끝에 추가할 다른 ArrayList</param>
+/// <param name="other">추가할 다른 ArrayList</param>
 void ArrayList::AddRange(const ArrayList& other)
 {
 	while (IsNeedToResize(other.m_count))
@@ -197,7 +197,7 @@ bool ArrayList::Contains(int value)
 /// <summary>
 /// ArryList을 앞에서 부터 지정한 값을 검사해 인덱스를 반환한다.
 /// </summary>
-/// <param name="value">ArrayList에서 잦을 값</param>
+/// <param name="value">찾을 값</param>
 /// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::IndexOf(int value)
 {
@@ -214,7 +214,7 @@ int ArrayList::IndexOf(int value)
 /// <summary>
 /// ArryList을 뒤에서 부터 지정한 값을 검사해 인덱스를 반환한다.
 /// </summary>
-/// <param name="value">ArrayList에서 잦을 값</param>
+/// <param name="value">찾을 값</param>
 /// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::LastIndexOf(int value)
 {
