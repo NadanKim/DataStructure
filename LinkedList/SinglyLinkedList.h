@@ -31,8 +31,8 @@ public:
 	void Insert(int index, int value);
 	void Insert(int index, SinglyLinkedListNode* node);
 
-	void Remove(int index, int value);
-	void Remove(int index, const SinglyLinkedListNode* node);
+	bool Remove(int value);
+	void Remove(const SinglyLinkedListNode* node);
 	void Clear();
 
 	bool Contains(int value);
@@ -44,8 +44,15 @@ public:
 #pragma endregion
 
 private:
+#pragma region Class Util
+	SinglyLinkedListNode* PopNode(int value);
+	void PushNode(SinglyLinkedListNode* node);
+#pragma endregion
+	
+private:
 #pragma region 변수
 	size_t m_count;
 	SinglyLinkedListNode* m_head;
+	SinglyLinkedListNode* m_free;
 #pragma endregion
 };

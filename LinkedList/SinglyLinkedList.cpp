@@ -5,7 +5,7 @@
 /// 비어있는 SinglyLinkedList를 생성한다.
 /// </summary>
 SinglyLinkedList::SinglyLinkedList()
-	: m_count(0), m_head(nullptr)
+	: m_count(0), m_head(nullptr), m_free(nullptr)
 {
 }
 
@@ -14,15 +14,15 @@ SinglyLinkedList::SinglyLinkedList()
 /// </summary>
 /// <param name="other">기준이 될 SinglyLinkedList</param>
 SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
-	: m_count(other.m_count)
+	: m_count(other.m_count), m_free(nullptr)
 {
 	SinglyLinkedListNode* prevNode = nullptr;
 	SinglyLinkedListNode* curNode = other.m_head;
 	while (curNode != nullptr)
 	{
-		SinglyLinkedListNode newNode(curNode->m_data);
-		newNode.m_next = prevNode;
-		prevNode = &newNode;
+		SinglyLinkedListNode *newNode = PopNode(curNode->m_data);
+		newNode->m_next = prevNode;
+		prevNode = newNode;
 	}
 	m_head = prevNode;
 }
@@ -38,6 +38,13 @@ SinglyLinkedList::~SinglyLinkedList()
 		m_head = m_head->m_next;
 		delete curNode;
 	}
+
+	while (m_free != nullptr)
+	{
+		SinglyLinkedListNode* curNode = m_free;
+		m_free = m_free->m_next;
+		delete curNode;
+	}
 }
 #pragma endregion
 
@@ -48,7 +55,7 @@ SinglyLinkedList::~SinglyLinkedList()
 /// <param name="value">추가할 값</param>
 void SinglyLinkedList::Add(int value)
 {
-	SinglyLinkedListNode* newNode = new SinglyLinkedListNode(value);
+	SinglyLinkedListNode* newNode = PopNode(value);
 	Add(newNode);
 }
 
@@ -76,7 +83,7 @@ void SinglyLinkedList::Add(SinglyLinkedListNode* node)
 /// <param name="value">추가할 값</param>
 void SinglyLinkedList::Insert(int index, int value)
 {
-	SinglyLinkedListNode* newNode = new SinglyLinkedListNode(value);
+	SinglyLinkedListNode* newNode = PopNode(value);
 	Insert(index, newNode);
 }
 
@@ -124,6 +131,69 @@ void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
 	m_count++;
 }
 
+/// <summary>
+/// SinglyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// </summary>
+/// <param name="value">제거할 값</param>
+bool SinglyLinkedList::Remove(int value)
+{
+	SinglyLinkedListNode* prevNode = nullptr;
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			break;
+		}
+		prevNode = curNode;
+		curNode = curNode->m_next;
+	}
+
+	if (curNode == nullptr)
+	{
+		return false;
+	}
+
+	if (prevNode == nullptr)
+	{
+		m_head = curNode->m_next;
+	}
+	else
+	{
+		prevNode->m_next = curNode->m_next;
+	}
+	PushNode(curNode);
+
+	m_count--;
+	return true;
+}
+
+/// <summary>
+/// SinglyLinkedList에서 지정된 노드를 제거한다.
+/// </summary>
+/// <param name="node">제거할 노드</param>
+void SinglyLinkedList::Remove(const SinglyLinkedListNode* node)
+{
+	Remove(node->m_data);
+}
+
+/// <summary>
+/// SinglyLinkedList의 모든 노드를 제거한다.
+/// </summary>
+void SinglyLinkedList::Clear()
+{
+	while (m_head != nullptr)
+	{
+		SinglyLinkedListNode* curNode = m_head;
+		m_head = m_head->m_next;
+		PushNode(curNode);
+	}
+	m_count = 0;
+}
+
+/// <summary>
+/// 테스트용 리스트 정보 출력 함수
+/// </summary>
 void SinglyLinkedList::PrintInfo()
 {
 	std::cout << "Count: " << m_count << std::endl;
@@ -135,5 +205,38 @@ void SinglyLinkedList::PrintInfo()
 		curNode = curNode->m_next;
 	}
 	std::cout << std::endl;
+}
+#pragma endregion
+
+#pragma region Class Util
+/// <summary>
+/// 자유 공간 리스트에서 노드를 가져오거나 새로 생성한다.
+/// </summary>
+/// <param name="value">노드 생성시 초기값</param>
+/// <returns>새 노드</returns>
+SinglyLinkedListNode* SinglyLinkedList::PopNode(int value)
+{
+	if (m_free == nullptr)
+	{
+		return new SinglyLinkedListNode(value);
+	}
+	else
+	{
+		SinglyLinkedListNode* node = m_free;
+		m_free = m_free->m_next;
+		node->m_data = value;
+		node->m_next = nullptr;
+		return node;
+	}
+}
+
+/// <summary>
+/// 자유 공간 리스트에 제거된 노드를 저장한다.
+/// </summary>
+/// <param name="node">제거된 노드</param>
+void SinglyLinkedList::PushNode(SinglyLinkedListNode* node)
+{
+	node->m_next = m_free;
+	m_free = node;
 }
 #pragma endregion

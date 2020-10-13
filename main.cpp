@@ -11,12 +11,19 @@ int main()
     a.Add(2);
     a.PrintInfo();
 
-    a.Add(new SinglyLinkedListNode(11));
+    SinglyLinkedListNode* newNode = new SinglyLinkedListNode(11);
+    a.Add(newNode);
     a.PrintInfo();
 
     a.Insert(0, 0);
     a.PrintInfo();
 
     a.Insert(10, new SinglyLinkedListNode(22));
+    a.PrintInfo();
+
+    a.Remove(1);
+    a.PrintInfo();
+
+    a.Remove(newNode);
     a.PrintInfo();
 }
