@@ -36,9 +36,9 @@ public:
 	void Clear();
 
 	bool Contains(int value);
-	bool Contains(const SinglyLinkedListNode& node);
-	SinglyLinkedListNode& Find(int value);
-	SinglyLinkedListNode& FindLast(int value);
+	bool Contains(const SinglyLinkedListNode* node);
+	SinglyLinkedListNode* Find(int value);
+	SinglyLinkedListNode* FindLast(int value);
 
 	void PrintInfo();
 #pragma endregion

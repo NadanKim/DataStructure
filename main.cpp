@@ -24,6 +24,11 @@ int main()
     a.Remove(1);
     a.PrintInfo();
 
-    a.Remove(newNode);
+    a.Add(11);
     a.PrintInfo();
+
+    if (a.Contains(11))
+    {
+        std::cout << a.FindLast(11) << '\n';
+    }
 }

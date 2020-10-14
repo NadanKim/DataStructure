@@ -174,7 +174,39 @@ bool SinglyLinkedList::Remove(int value)
 /// <param name="node">제거할 노드</param>
 void SinglyLinkedList::Remove(const SinglyLinkedListNode* node)
 {
-	Remove(node->m_data);
+	if (node == nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	SinglyLinkedListNode* prevNode = nullptr;
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode == node)
+		{
+			break;
+		}
+		prevNode = curNode;
+		curNode = curNode->m_next;
+	}
+
+	if (curNode == nullptr)
+	{
+		throw std::out_of_range("node");
+	}
+
+	if (prevNode == nullptr)
+	{
+		m_head = curNode->m_next;
+	}
+	else
+	{
+		prevNode->m_next = curNode->m_next;
+	}
+	PushNode(curNode);
+
+	m_count--;
 }
 
 /// <summary>
@@ -189,6 +221,83 @@ void SinglyLinkedList::Clear()
 		PushNode(curNode);
 	}
 	m_count = 0;
+}
+
+/// <summary>
+/// 지정한 값을 포함한 노드가 존재하는지 확인한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>값의 존재 여부</returns>
+bool SinglyLinkedList::Contains(int value)
+{
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			return true;
+		}
+		curNode = curNode->m_next;
+	}
+	return false;
+}
+
+/// <summary>
+/// 지정한 노드가 SinglyLinkedList에 포함되는지 확인한다.
+/// </summary>
+/// <param name="node">찾을 노드</param>
+/// <returns>노드의 포함 여부</returns>
+bool SinglyLinkedList::Contains(const SinglyLinkedListNode* node)
+{
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode == node)
+		{
+			return true;
+		}
+		curNode = curNode->m_next;
+	}
+	return false;
+}
+
+/// <summary>
+/// 지정한 값을 포함하는 가장 처음 일치하는 노드를 반환한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
+SinglyLinkedListNode* SinglyLinkedList::Find(int value)
+{
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			break;
+		}
+		curNode = curNode->m_next;
+	}
+	return curNode;
+}
+
+/// <summary>
+/// 지정한 값을 포함하는 가장 마지막 일치하는 노드를 반환한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
+SinglyLinkedListNode* SinglyLinkedList::FindLast(int value)
+{
+	SinglyLinkedListNode* matchNode = nullptr;
+	SinglyLinkedListNode* curNode = m_head;
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			matchNode = curNode;
+		}
+		curNode = curNode->m_next;
+	}
+	return matchNode;
 }
 
 /// <summary>
