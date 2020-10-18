@@ -11,4 +11,6 @@
       > [SinglyLinkedList.h](https://github.com/NadanKim/DataStructure/blob/master/LinkedList/SinglyLinkedList.h)  
       > [SinglyLinkedList.cpp](https://github.com/NadanKim/DataStructure/blob/master/LinkedList/SinglyLinkedList.cpp)  
   * 이중 연결 리스트(DoublyLinkedList)
+      > [DoublyLinkedList.h](https://github.com/NadanKim/DataStructure/blob/master/LinkedList/DoublyLinkedList.h)   
+      > [DoublyLinkedList.cpp](https://github.com/NadanKim/DataStructure/blob/master/LinkedList/DoublyLinkedList.cpp)   
   * 원형 연결 리스트(CircularLinkedList)
