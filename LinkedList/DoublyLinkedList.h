@@ -7,9 +7,9 @@ struct DoublyLinkedListNode
 	DoublyLinkedListNode() {}
 	DoublyLinkedListNode(int value) { m_data = value; }
 
-	int m_data = 0;
-	DoublyLinkedListNode* m_prev = nullptr;
-	DoublyLinkedListNode* m_next = nullptr;
+	int m_data{ 0 };
+	DoublyLinkedListNode* m_prev{ nullptr };
+	DoublyLinkedListNode* m_next{ nullptr };
 };
 
 class DoublyLinkedList
@@ -44,7 +44,7 @@ public:
 	DoublyLinkedListNode* Find(int value);
 	DoublyLinkedListNode* FindLast(int value);
 
-	void PrintInfo();
+	void PrintInfo(bool isPrintReverse = false);
 #pragma endregion
 
 private:

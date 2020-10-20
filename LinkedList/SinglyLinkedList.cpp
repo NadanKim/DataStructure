@@ -16,15 +16,15 @@ SinglyLinkedList::SinglyLinkedList()
 SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
 	: m_count(other.m_count), m_free(nullptr)
 {
-	SinglyLinkedListNode* curNode = other.m_head;
-	SinglyLinkedListNode* prevNode = PopNode(curNode->m_data);
+	SinglyLinkedListNode* curNode{ other.m_head };
+	SinglyLinkedListNode* prevNode{ PopNode(curNode->m_data) };
 
 	m_head = prevNode;
 	curNode = curNode->m_next;
 
 	while (curNode != nullptr)
 	{
-		SinglyLinkedListNode *newNode = PopNode(curNode->m_data);
+		SinglyLinkedListNode* newNode{ PopNode(curNode->m_data) };
 		prevNode->m_next = newNode;
 		prevNode = newNode;
 		curNode = curNode->m_next;
@@ -38,14 +38,14 @@ SinglyLinkedList::~SinglyLinkedList()
 {
 	while (m_head != nullptr)
 	{
-		SinglyLinkedListNode* curNode = m_head;
+		SinglyLinkedListNode* curNode{ m_head };
 		m_head = m_head->m_next;
 		delete curNode;
 	}
 
 	while (m_free != nullptr)
 	{
-		SinglyLinkedListNode* curNode = m_free;
+		SinglyLinkedListNode* curNode{ m_free };
 		m_free = m_free->m_next;
 		delete curNode;
 	}
@@ -59,7 +59,7 @@ SinglyLinkedList::~SinglyLinkedList()
 /// <param name="value">추가할 값</param>
 void SinglyLinkedList::Add(int value)
 {
-	SinglyLinkedListNode* newNode = PopNode(value);
+	SinglyLinkedListNode* newNode{ PopNode(value) };
 	Add(newNode);
 }
 
@@ -87,7 +87,7 @@ void SinglyLinkedList::Add(SinglyLinkedListNode* node)
 /// <param name="value">추가할 값</param>
 void SinglyLinkedList::Insert(int index, int value)
 {
-	SinglyLinkedListNode* newNode = PopNode(value);
+	SinglyLinkedListNode* newNode{ PopNode(value) };
 	Insert(index, newNode);
 }
 
@@ -113,8 +113,8 @@ void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
 		index = m_count;
 	}
 
-	SinglyLinkedListNode* prevNode = nullptr;
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* prevNode{ nullptr };
+	SinglyLinkedListNode* curNode{ m_head };
 	while (index--)
 	{
 		prevNode = curNode;
@@ -141,8 +141,8 @@ void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
 /// <param name="value">제거할 값</param>
 bool SinglyLinkedList::Remove(int value)
 {
-	SinglyLinkedListNode* prevNode = nullptr;
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* prevNode{ nullptr };
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -183,8 +183,8 @@ void SinglyLinkedList::Remove(const SinglyLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
-	SinglyLinkedListNode* prevNode = nullptr;
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* prevNode{ nullptr };
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -220,7 +220,7 @@ void SinglyLinkedList::Clear()
 {
 	while (m_head != nullptr)
 	{
-		SinglyLinkedListNode* curNode = m_head;
+		SinglyLinkedListNode* curNode{ m_head };
 		m_head = m_head->m_next;
 		PushNode(curNode);
 	}
@@ -234,7 +234,7 @@ void SinglyLinkedList::Clear()
 /// <returns>값의 존재 여부</returns>
 bool SinglyLinkedList::Contains(int value)
 {
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -253,7 +253,7 @@ bool SinglyLinkedList::Contains(int value)
 /// <returns>노드의 포함 여부</returns>
 bool SinglyLinkedList::Contains(const SinglyLinkedListNode* node)
 {
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -272,7 +272,7 @@ bool SinglyLinkedList::Contains(const SinglyLinkedListNode* node)
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
 SinglyLinkedListNode* SinglyLinkedList::Find(int value)
 {
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -291,8 +291,8 @@ SinglyLinkedListNode* SinglyLinkedList::Find(int value)
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
 SinglyLinkedListNode* SinglyLinkedList::FindLast(int value)
 {
-	SinglyLinkedListNode* matchNode = nullptr;
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* matchNode{ nullptr };
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -311,7 +311,7 @@ void SinglyLinkedList::PrintInfo()
 {
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Nodes: ";
-	SinglyLinkedListNode* curNode = m_head;
+	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		std::cout << curNode->m_data << ", ";
@@ -329,6 +329,7 @@ void SinglyLinkedList::PrintInfo()
 /// <returns>새 노드</returns>
 SinglyLinkedListNode* SinglyLinkedList::PopNode(int value)
 {
+	SinglyLinkedListNode* newNode{ nullptr };
 	if (m_free == nullptr)
 	{
 		return new SinglyLinkedListNode(value);

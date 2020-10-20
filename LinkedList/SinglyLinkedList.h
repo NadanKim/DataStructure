@@ -7,8 +7,8 @@ struct SinglyLinkedListNode
 	SinglyLinkedListNode() {}
 	SinglyLinkedListNode(int value) { m_data = value; }
 
-	int m_data = 0;
-	SinglyLinkedListNode* m_next = nullptr;
+	int m_data{ 0 };
+	SinglyLinkedListNode* m_next{ nullptr };
 };
 
 class SinglyLinkedList
