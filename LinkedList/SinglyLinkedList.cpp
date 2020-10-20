@@ -16,15 +16,19 @@ SinglyLinkedList::SinglyLinkedList()
 SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
 	: m_count(other.m_count), m_free(nullptr)
 {
-	SinglyLinkedListNode* prevNode = nullptr;
 	SinglyLinkedListNode* curNode = other.m_head;
+	SinglyLinkedListNode* prevNode = PopNode(curNode->m_data);
+
+	m_head = prevNode;
+	curNode = curNode->m_next;
+
 	while (curNode != nullptr)
 	{
 		SinglyLinkedListNode *newNode = PopNode(curNode->m_data);
-		newNode->m_next = prevNode;
+		prevNode->m_next = newNode;
 		prevNode = newNode;
+		curNode = curNode->m_next;
 	}
-	m_head = prevNode;
 }
 
 /// <summary>
