@@ -18,8 +18,11 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
 {
 	DoublyLinkedListNode* curNode{ other.m_head };
 
-	m_head = m_tail = PopNode(curNode->m_data);
-	curNode = curNode->m_next;
+	if (curNode != nullptr)
+	{
+		m_head = m_tail = PopNode(curNode->m_data);
+		curNode = curNode->m_next;
+	}
 
 	while (curNode != nullptr)
 	{
@@ -36,23 +39,156 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
 /// </summary>
 DoublyLinkedList::~DoublyLinkedList()
 {
-	while (m_head->m_next != nullptr)
+	while (m_head != nullptr)
 	{
+		DoublyLinkedListNode* curNode{ m_head };
 		m_head = m_head->m_next;
-		delete m_head->m_prev;
+		delete curNode;
 	}
-	delete m_head;
 
-	while (m_free->m_next != nullptr)
+	while (m_free != nullptr)
 	{
+		DoublyLinkedListNode* curNode{ m_free };
 		m_free = m_free->m_next;
-		delete m_free->m_prev;
+		delete curNode;
 	}
-	delete m_free;
 }
 #pragma endregion
 
 #pragma region 메서드
+/// <summary>
+/// SinglyLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// </summary>
+/// <param name="value">추가할 값</param>
+void DoublyLinkedList::AddFirst(int value)
+{
+	DoublyLinkedListNode* newNode{ PopNode(value) };
+	AddFirst(newNode);
+}
+
+/// <summary>
+/// SinglyLinkedList의 시작 위치에 지정한 노드를 추가한다.
+/// </summary>
+/// <param name="node">추가할 새 노드</param>
+void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
+{
+	if (node == nullptr || node->m_prev != nullptr || node->m_next != nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	node->m_next = m_head;
+	if (m_head != nullptr)
+	{
+		m_head->m_prev = node;
+		m_head = node;
+	}
+	else
+	{
+		m_head = m_tail = node;
+	}
+
+	m_count++;
+}
+
+/// <summary>
+/// SinglyLinkedList의 끝 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// </summary>
+/// <param name="value">추가할 값</param>
+void DoublyLinkedList::AddLast(int value)
+{
+	DoublyLinkedListNode* newNode{ PopNode(value) };
+	AddLast(newNode);
+}
+
+/// <summary>
+/// SinglyLinkedList의 끝 위치에 지정한 노드를 추가한다.
+/// </summary>
+/// <param name="node">추가할 새 노드</param>
+void DoublyLinkedList::AddLast(DoublyLinkedListNode* node)
+{
+	if (node == nullptr || node->m_prev != nullptr || node->m_next != nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	node->m_prev = m_tail;
+	if (m_tail != nullptr)
+	{
+		m_tail->m_next = node;
+		m_tail = node;
+	}
+	else
+	{
+		m_head = m_tail = node;
+	}
+
+	m_count++;
+}
+
+/// <summary>
+/// DoublyLinkedList의 지정한 인덱스에 해당하는 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// </summary>
+/// <param name="index">값을 추가할 인덱스</param>
+/// <param name="value">추가할 값</param>
+void DoublyLinkedList::Insert(int index, int value)
+{
+	DoublyLinkedListNode* newNode{ PopNode(value) };
+	Insert(index, newNode);
+}
+
+/// <summary>
+/// DoublyLinkedList의 지정한 인덱스에 해당하는 위치에 지정된 노드를 추가한다.
+/// </summary>
+/// <param name="index">새 노드를 추가할 인덱스</param>
+/// <param name="node">추가할 새 노드</param>
+void DoublyLinkedList::Insert(int index, DoublyLinkedListNode* node)
+{
+	if (index < 0)
+	{
+		throw std::out_of_range("index");
+	}
+
+	if (node == nullptr || node->m_next != nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	if (index > m_count)
+	{
+		index = m_count;
+	}
+
+	DoublyLinkedListNode* curNode{ m_head };
+	while (index--)
+	{
+		curNode = curNode->m_next;
+	}
+
+	DoublyLinkedListNode* prevNode{ curNode != nullptr ? curNode->m_prev : nullptr };
+	node->m_prev = prevNode;
+	if (prevNode != nullptr)
+	{
+		prevNode->m_next = node;
+	}
+	node->m_next = curNode;
+	if (curNode != nullptr)
+	{
+		curNode->m_prev = node;
+	}
+
+	if (node->m_prev == nullptr)
+	{
+		m_head = node;
+	}
+	if (node->m_next == nullptr)
+	{
+		m_tail = node;
+	}
+
+	m_count++;
+}
+
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
