@@ -190,6 +190,123 @@ void DoublyLinkedList::Insert(int index, DoublyLinkedListNode* node)
 }
 
 /// <summary>
+/// DoublyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// </summary>
+/// <param name="value">제거할 값</param>
+bool DoublyLinkedList::RemoveFirst(int value)
+{
+	DoublyLinkedListNode* curNode{ m_head };
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			break;
+		}
+		curNode = curNode->m_next;
+	}
+
+	if (curNode == nullptr)
+	{
+		return false;
+	}
+
+	Remove(curNode);
+
+	return true;
+}
+
+/// <summary>
+/// DoublyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// </summary>
+/// <param name="value">제거할 값</param>
+bool DoublyLinkedList::RemoveLast(int value)
+{
+	DoublyLinkedListNode* curNode{ m_tail };
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			break;
+		}
+		curNode = curNode->m_prev;
+	}
+
+	if (curNode == nullptr)
+	{
+		return false;
+	}
+
+	Remove(curNode);
+
+	return true;
+}
+
+/// <summary>
+/// DoublyLinkedList에서 지정된 노드를 제거한다.
+/// </summary>
+/// <param name="node">제거할 노드</param>
+void DoublyLinkedList::Remove(const DoublyLinkedListNode* node)
+{
+	if (node == nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	DoublyLinkedListNode* curNode{ m_head };
+	while (curNode != nullptr)
+	{
+		if (curNode == node)
+		{
+			break;
+		}
+		curNode = curNode->m_next;
+	}
+
+	if (curNode == nullptr)
+	{
+		throw std::out_of_range("node");
+	}
+
+	DoublyLinkedListNode* prevNode{ curNode->m_prev };
+	DoublyLinkedListNode* nextNode{ curNode->m_next };
+	if (prevNode != nullptr)
+	{
+		prevNode->m_next = nextNode;
+	}
+	else
+	{
+		m_head = nextNode;
+	}
+
+	if (nextNode != nullptr)
+	{
+		nextNode->m_prev = prevNode;
+	}
+	else
+	{
+		m_tail = prevNode;
+	}
+
+	PushNode(curNode);
+
+	m_count--;
+}
+
+/// <summary>
+/// DoublyLinkedList의 모든 노드를 제거한다.
+/// </summary>
+void DoublyLinkedList::Clear()
+{
+	while (m_head != nullptr)
+	{
+		DoublyLinkedListNode* curNode{ m_head };
+		m_head = m_head->m_next;
+		PushNode(curNode);
+	}
+	m_count = 0;
+}
+
+/// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
 void DoublyLinkedList::PrintInfo(bool isPrintReverse)
@@ -220,10 +337,10 @@ DoublyLinkedListNode* DoublyLinkedList::PopNode(int value)
 	else
 	{
 		newNode = m_free;
-		newNode->m_data = value;
-		newNode->m_prev = newNode->m_next = nullptr;
-
 		m_free = m_free->m_next;
+
+		newNode->m_data = value;
+		newNode->m_next = nullptr;
 	}
 
 	return newNode;
@@ -235,7 +352,7 @@ DoublyLinkedListNode* DoublyLinkedList::PopNode(int value)
 /// <param name="node">제거된 노드</param>
 void DoublyLinkedList::PushNode(DoublyLinkedListNode* node)
 {
-	m_free->m_prev = node;
+	node->m_prev = nullptr;
 	node->m_next = m_free;
 	m_free = node;
 }

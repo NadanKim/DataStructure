@@ -35,7 +35,8 @@ public:
 	void Insert(int index, int value);
 	void Insert(int index, DoublyLinkedListNode* node);
 
-	bool Remove(int value);
+	bool RemoveFirst(int value);
+	bool RemoveLast(int value);
 	void Remove(const DoublyLinkedListNode* node);
 	void Clear();
 

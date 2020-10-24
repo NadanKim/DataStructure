@@ -141,7 +141,6 @@ void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
 /// <param name="value">제거할 값</param>
 bool SinglyLinkedList::Remove(int value)
 {
-	SinglyLinkedListNode* prevNode{ nullptr };
 	SinglyLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
@@ -149,7 +148,6 @@ bool SinglyLinkedList::Remove(int value)
 		{
 			break;
 		}
-		prevNode = curNode;
 		curNode = curNode->m_next;
 	}
 
@@ -158,17 +156,8 @@ bool SinglyLinkedList::Remove(int value)
 		return false;
 	}
 
-	if (prevNode == nullptr)
-	{
-		m_head = curNode->m_next;
-	}
-	else
-	{
-		prevNode->m_next = curNode->m_next;
-	}
-	PushNode(curNode);
+	Remove(curNode);
 
-	m_count--;
 	return true;
 }
 
@@ -332,16 +321,17 @@ SinglyLinkedListNode* SinglyLinkedList::PopNode(int value)
 	SinglyLinkedListNode* newNode{ nullptr };
 	if (m_free == nullptr)
 	{
-		return new SinglyLinkedListNode(value);
+		newNode = new SinglyLinkedListNode(value);
 	}
 	else
 	{
-		SinglyLinkedListNode* node = m_free;
+		newNode = m_free;
 		m_free = m_free->m_next;
-		node->m_data = value;
-		node->m_next = nullptr;
-		return node;
+
+		newNode->m_data = value;
+		newNode->m_next = nullptr;
 	}
+	return newNode;
 }
 
 /// <summary>
