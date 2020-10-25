@@ -14,8 +14,8 @@ public:
 #pragma region 속성
 	const int Capacity() { return m_capacity; }
 	const int Count() { return m_count; }
-	int& Item(int index) { 
-		if (index < 0 || index >= m_count)
+	int& Item(size_t index) {
+		if (index >= m_count)
 		{
 			throw std::out_of_range("index");
 		}
@@ -26,12 +26,12 @@ public:
 #pragma region 메서드
 	int Add(int value);
 	void AddRange(const ArrayList& other);
-	void Insert(int index, int value);
-	void InsertRange(int index, const ArrayList& other);
+	void Insert(size_t index, int value);
+	void InsertRange(size_t index, const ArrayList& other);
 
 	void Remove(int value);
-	void RemoveAt(int index);
-	void RemoveRange(int index, int count);
+	void RemoveAt(size_t index);
+	void RemoveRange(size_t index, size_t count);
 	void Clear();
 
 	bool Contains(int value);
@@ -45,8 +45,8 @@ private:
 #pragma region Class Util
 	bool IsNeedToResize(int insertCount = 1);
 	void Resize();
-	void MoveToRight(int index, int insertCount = 1);
-	void MoveToLeft(int index, int removeCount = 1);
+	void MoveToRight(size_t index, size_t insertCount = 1);
+	void MoveToLeft(size_t index, size_t removeCount = 1);
 #pragma endregion
 
 #pragma region 변수

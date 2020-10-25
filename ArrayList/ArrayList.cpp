@@ -23,7 +23,7 @@ ArrayList::ArrayList(const ArrayList& other)
 	: ArrayList(other.m_capacity)
 {
 	m_count = other.m_count;
-	for (int i = 0; i < m_capacity; i++)
+	for (size_t i = 0; i < m_capacity; i++)
 	{
 		m_items[i] = other.m_items[i];
 	}
@@ -69,7 +69,7 @@ void ArrayList::AddRange(const ArrayList& other)
 		Resize();
 	}
 
-	for (int i = 0; i < other.m_count; i++)
+	for (size_t i = 0; i < other.m_count; i++)
 	{
 		m_items[m_count++] = other.m_items[i];
 	}
@@ -80,9 +80,9 @@ void ArrayList::AddRange(const ArrayList& other)
 /// </summary>
 /// <param name="index">값을 추가할 인덱스</param>
 /// <param name="value">추가할 값</param>
-void ArrayList::Insert(int index, int value)
+void ArrayList::Insert(size_t index, int value)
 {
-	if (index < 0 || index > m_count)
+	if (index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -101,9 +101,9 @@ void ArrayList::Insert(int index, int value)
 /// </summary>
 /// <param name="index">다른 ArrayList를 추가할 인덱스</param>
 /// <param name="other">추가할 다른 ArrayList</param>
-void ArrayList::InsertRange(int index, const ArrayList& other)
+void ArrayList::InsertRange(size_t index, const ArrayList& other)
 {
-	if (index < 0 || index > m_count)
+	if (index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -114,7 +114,7 @@ void ArrayList::InsertRange(int index, const ArrayList& other)
 	}
 
 	MoveToRight(index, other.m_count);
-	for (int i = 0; i < other.m_count; i++)
+	for (size_t i = 0; i < other.m_count; i++)
 	{
 		m_items[index + i] = other.m_items[i];
 	}
@@ -126,7 +126,7 @@ void ArrayList::InsertRange(int index, const ArrayList& other)
 /// <param name="value">제거할 값</param>
 void ArrayList::Remove(int value)
 {
-	int index = IndexOf(value);
+	int index{ IndexOf(value) };
 	if (index != -1)
 	{
 		MoveToLeft(index);
@@ -137,9 +137,9 @@ void ArrayList::Remove(int value)
 /// ArrayList에서 지정된 인덱스의 값을 제거한다.
 /// </summary>
 /// <param name="index">제거할 인덱스(조건: 0이상)</param>
-void ArrayList::RemoveAt(int index)
+void ArrayList::RemoveAt(size_t index)
 {
-	if (index < 0 || index >= m_count)
+	if (index >= m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -152,22 +152,14 @@ void ArrayList::RemoveAt(int index)
 /// </summary>
 /// <param name="index">제거할 범위의 시작 인덱스</param>
 /// <param name="count">제거할 값 개수</param>
-void ArrayList::RemoveRange(int index, int count)
+void ArrayList::RemoveRange(size_t index, size_t count)
 {
-	if (index < 0)
-	{
-		throw std::out_of_range("index");
-	}
-	else if (count < 0)
-	{
-		throw std::out_of_range("count");
-	}
-
 	if (index >= m_count)
 	{
 		throw std::invalid_argument("index");
 	}
-	else if (count > m_count - index)
+
+	if (count > m_count - index)
 	{
 		throw std::invalid_argument("count");
 	}
@@ -200,7 +192,7 @@ bool ArrayList::Contains(int value)
 /// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::IndexOf(int value)
 {
-	for (int i = 0; i < m_count; i++)
+	for (size_t i = 0; i < m_count; i++)
 	{
 		if (m_items[i] == value)
 		{
@@ -235,7 +227,7 @@ void ArrayList::PrintInfo(bool isShowAll)
 	std::cout << "Capacity: " << m_capacity << std::endl;
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Items: ";
-	for (int i = 0, limit = isShowAll ? m_capacity : m_count; i < m_count; i++)
+	for (size_t i = 0, limit = isShowAll ? m_capacity : m_count; i < m_count; i++)
 	{
 		std::cout << m_items[i] << ", ";
 	}
@@ -259,8 +251,8 @@ bool ArrayList::IsNeedToResize(int insertCount)
 /// </summary>
 void ArrayList::Resize()
 {
-	int* newItems = new int[m_capacity * 2]{ 0 };
-	for (int i = 0; i < m_capacity; i++)
+	int* newItems{ new int[m_capacity * 2]{ 0 } };
+	for (size_t i = 0; i < m_capacity; i++)
 	{
 		newItems[i] = m_items[i];
 	}
@@ -275,9 +267,9 @@ void ArrayList::Resize()
 /// </summary>
 /// <param name="index">데이터를 삽입할 인덱스</param>
 /// <param name="insertCount">삽입할 값의 개수(기본: 1)</param>
-void ArrayList::MoveToRight(int index, int insertCount)
+void ArrayList::MoveToRight(size_t index, size_t insertCount)
 {
-	for (int i = m_count - 1; i >= index; i--)
+	for (size_t i = m_count - 1; i >= index; i--)
 	{
 		m_items[i + insertCount] = m_items[i];
 	}
@@ -289,9 +281,9 @@ void ArrayList::MoveToRight(int index, int insertCount)
 /// </summary>
 /// <param name="index">데이터를 삭제할 인덱스</param>
 /// <param name="removeCount">삭제할 값의 개수(기본: 1)</param>
-void ArrayList::MoveToLeft(int index, int removeCount)
+void ArrayList::MoveToLeft(size_t index, size_t removeCount)
 {
-	for (int i = index; i < m_count - removeCount; i++)
+	for (size_t i = index; i < m_count - removeCount; i++)
 	{
 		m_items[i] = m_items[i + removeCount];
 	}

@@ -85,7 +85,7 @@ void SinglyLinkedList::Add(SinglyLinkedListNode* node)
 /// </summary>
 /// <param name="index">값을 추가할 인덱스</param>
 /// <param name="value">추가할 값</param>
-void SinglyLinkedList::Insert(int index, int value)
+void SinglyLinkedList::Insert(size_t index, int value)
 {
 	SinglyLinkedListNode* newNode{ PopNode(value) };
 	Insert(index, newNode);
@@ -96,9 +96,9 @@ void SinglyLinkedList::Insert(int index, int value)
 /// </summary>
 /// <param name="index">새 노드를 추가할 인덱스</param>
 /// <param name="node">추가할 새 노드</param>
-void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
+void SinglyLinkedList::Insert(size_t index, SinglyLinkedListNode* node)
 {
-	if (index < 0)
+	if (index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -106,11 +106,6 @@ void SinglyLinkedList::Insert(int index, SinglyLinkedListNode* node)
 	if (node == nullptr || node->m_next != nullptr)
 	{
 		throw std::invalid_argument("node");
-	}
-
-	if (index > m_count)
-	{
-		index = m_count;
 	}
 
 	SinglyLinkedListNode* prevNode{ nullptr };
@@ -266,11 +261,11 @@ SinglyLinkedListNode* SinglyLinkedList::Find(int value)
 	{
 		if (curNode->m_data == value)
 		{
-			break;
+			return curNode;
 		}
 		curNode = curNode->m_next;
 	}
-	return curNode;
+	return nullptr;
 }
 
 /// <summary>

@@ -28,8 +28,8 @@ public:
 #pragma region 메서드
 	void Add(int value);
 	void Add(SinglyLinkedListNode* node);
-	void Insert(int index, int value);
-	void Insert(int index, SinglyLinkedListNode* node);
+	void Insert(size_t index, int value);
+	void Insert(size_t index, SinglyLinkedListNode* node);
 
 	bool Remove(int value);
 	void Remove(const SinglyLinkedListNode* node);

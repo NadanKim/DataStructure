@@ -32,8 +32,8 @@ public:
 	void AddFirst(DoublyLinkedListNode* node);
 	void AddLast(int value);
 	void AddLast(DoublyLinkedListNode* node);
-	void Insert(int index, int value);
-	void Insert(int index, DoublyLinkedListNode* node);
+	void Insert(size_t index, int value);
+	void Insert(size_t index, DoublyLinkedListNode* node);
 
 	bool RemoveFirst(int value);
 	bool RemoveLast(int value);

@@ -131,7 +131,7 @@ void DoublyLinkedList::AddLast(DoublyLinkedListNode* node)
 /// </summary>
 /// <param name="index">값을 추가할 인덱스</param>
 /// <param name="value">추가할 값</param>
-void DoublyLinkedList::Insert(int index, int value)
+void DoublyLinkedList::Insert(size_t index, int value)
 {
 	DoublyLinkedListNode* newNode{ PopNode(value) };
 	Insert(index, newNode);
@@ -142,9 +142,9 @@ void DoublyLinkedList::Insert(int index, int value)
 /// </summary>
 /// <param name="index">새 노드를 추가할 인덱스</param>
 /// <param name="node">추가할 새 노드</param>
-void DoublyLinkedList::Insert(int index, DoublyLinkedListNode* node)
+void DoublyLinkedList::Insert(size_t index, DoublyLinkedListNode* node)
 {
-	if (index < 0)
+	if (index > m_count)
 	{
 		throw std::out_of_range("index");
 	}
@@ -152,11 +152,6 @@ void DoublyLinkedList::Insert(int index, DoublyLinkedListNode* node)
 	if (node == nullptr || node->m_next != nullptr)
 	{
 		throw std::invalid_argument("node");
-	}
-
-	if (index > m_count)
-	{
-		index = m_count;
 	}
 
 	DoublyLinkedListNode* curNode{ m_head };
@@ -304,6 +299,82 @@ void DoublyLinkedList::Clear()
 		PushNode(curNode);
 	}
 	m_count = 0;
+}
+
+/// <summary>
+/// 지정한 값을 포함한 노드가 존재하는지 확인한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>값의 존재 여부</returns>
+bool DoublyLinkedList::Contains(int value)
+{
+	DoublyLinkedListNode* curNode{ m_head };
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			return true;
+		}
+		curNode = curNode->m_next;
+	}
+	return false;
+}
+
+/// <summary>
+/// 지정한 노드가 DoublyLinkedList에 포함되는지 확인한다.
+/// </summary>
+/// <param name="node">찾을 노드</param>
+/// <returns>노드의 포함 여부</returns>
+bool DoublyLinkedList::Contains(const DoublyLinkedListNode* node)
+{
+	DoublyLinkedListNode* curNode{ m_head };
+	while (curNode != nullptr)
+	{
+		if (curNode == node)
+		{
+			return true;
+		}
+		curNode = curNode->m_next;
+	}
+	return false;
+}
+
+/// <summary>
+/// 지정한 값을 포함하는 가장 처음 일치하는 노드를 반환한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
+DoublyLinkedListNode* DoublyLinkedList::Find(int value)
+{
+	DoublyLinkedListNode* curNode{ m_head };
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			return curNode;
+		}
+		curNode = curNode->m_next;
+	}
+	return nullptr;
+}
+
+/// <summary>
+/// 지정한 값을 포함하는 가장 마지막 일치하는 노드를 반환한다.
+/// </summary>
+/// <param name="value">찾을 값</param>
+/// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
+DoublyLinkedListNode* DoublyLinkedList::FindLast(int value)
+{
+	DoublyLinkedListNode* curNode{ m_tail };
+	while (curNode != nullptr)
+	{
+		if (curNode->m_data == value)
+		{
+			return curNode;
+		}
+		curNode = curNode->m_prev;
+	}
+	return nullptr;
 }
 
 /// <summary>
