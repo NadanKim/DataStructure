@@ -14,8 +14,13 @@ DoublyLinkedList::DoublyLinkedList()
 /// </summary>
 /// <param name="other">기준이 될 DoublyLinkedList</param>
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
-	: m_count(other.m_count), m_free(nullptr)
+	: m_count(other.m_count), m_head(nullptr), m_tail(nullptr), m_free(nullptr)
 {
+	if (other.m_head == nullptr)
+	{
+		return;
+	}
+
 	DoublyLinkedListNode* curNode{ other.m_head };
 
 	if (curNode != nullptr)

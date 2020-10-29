@@ -149,12 +149,14 @@
   <ItemGroup>
     <ClCompile Include="ArrayList\ArrayList.cpp" />
     <ClCompile Include="LinkedList\DoublyLinkedList.cpp" />
+    <ClCompile Include="LinkedList\SinglyCircularLinkedList.cpp" />
     <ClCompile Include="LinkedList\SinglyLinkedList.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayList\ArrayList.h" />
     <ClInclude Include="LinkedList\DoublyLinkedList.h" />
+    <ClInclude Include="LinkedList\SinglyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyLinkedList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

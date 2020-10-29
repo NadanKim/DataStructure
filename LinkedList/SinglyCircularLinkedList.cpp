@@ -1,19 +1,19 @@
-﻿#include "SinglyLinkedList.h"
+﻿#include "SinglyCircularLinkedList.h"
 
 #pragma region 생성자
 /// <summary>
-/// 비어있는 SinglyLinkedList를 생성한다.
+/// 비어있는 SinglyCircularLinkedList를 생성한다.
 /// </summary>
-SinglyLinkedList::SinglyLinkedList()
+SinglyCircularLinkedList::SinglyCircularLinkedList()
 	: m_count(0), m_head(nullptr), m_free(nullptr)
 {
 }
 
 /// <summary>
-/// 다른 SinglyLinkedList가 가지고 있는 노드를 복사해 SinglyLinkedList를 생성한다.
+/// 다른 SinglyCircularLinkedList가 가지고 있는 노드를 복사해 SinglyCircularLinkedList를 생성한다.
 /// </summary>
-/// <param name="other">기준이 될 SinglyLinkedList</param>
-SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
+/// <param name="other">기준이 될 SinglyCircularLinkedList</param>
+SinglyCircularLinkedList::SinglyCircularLinkedList(const SinglyCircularLinkedList& other)
 	: m_count(other.m_count), m_head(nullptr), m_free(nullptr)
 {
 	if (other.m_head == nullptr)
@@ -21,15 +21,15 @@ SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
 		return;
 	}
 
-	SinglyLinkedListNode* curNode{ other.m_head };
-	SinglyLinkedListNode* prevNode{ PopNode(curNode->m_data) };
+	SinglyCircularLinkedListNode* curNode{ other.m_head };
+	SinglyCircularLinkedListNode* prevNode{ PopNode(curNode->m_data) };
 
 	m_head = prevNode;
 	curNode = curNode->m_next;
 
-	while (curNode != nullptr)
+	while (curNode->m_next != other.m_head)
 	{
-		SinglyLinkedListNode* newNode{ PopNode(curNode->m_data) };
+		SinglyCircularLinkedListNode* newNode{ PopNode(curNode->m_data) };
 		prevNode->m_next = newNode;
 		prevNode = newNode;
 		curNode = curNode->m_next;
@@ -39,18 +39,23 @@ SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& other)
 /// <summary>
 /// 메모리 누수를 막기 위해 동적 생성한 노드들을 제거한다.
 /// </summary>
-SinglyLinkedList::~SinglyLinkedList()
+SinglyCircularLinkedList::~SinglyCircularLinkedList()
 {
-	while (m_head != nullptr)
+	if (m_head != nullptr)
 	{
-		SinglyLinkedListNode* curNode{ m_head };
-		m_head = m_head->m_next;
-		delete curNode;
+		SinglyCircularLinkedListNode* head{ m_head };
+		while (m_head->m_next != head)
+		{
+			SinglyCircularLinkedListNode* curNode{ m_head };
+			m_head = m_head->m_next;
+			delete curNode;
+		}
+		delete m_head;
 	}
 
 	while (m_free != nullptr)
 	{
-		SinglyLinkedListNode* curNode{ m_free };
+		SinglyCircularLinkedListNode* curNode{ m_free };
 		m_free = m_free->m_next;
 		delete curNode;
 	}
@@ -59,49 +64,68 @@ SinglyLinkedList::~SinglyLinkedList()
 
 #pragma region 메서드
 /// <summary>
-/// SinglyLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// SinglyCircularLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
-void SinglyLinkedList::Add(int value)
+void SinglyCircularLinkedList::Add(int value)
 {
-	SinglyLinkedListNode* newNode{ PopNode(value) };
+	SinglyCircularLinkedListNode* newNode{ PopNode(value) };
 	Add(newNode);
 }
 
 /// <summary>
-/// SinglyLinkedList의 시작 위치에 지정한 노드를 추가한다.
+/// SinglyCircularLinkedList의 시작 위치에 지정한 노드를 추가한다.
 /// </summary>
 /// <param name="node">추가할 새 노드</param>
-void SinglyLinkedList::Add(SinglyLinkedListNode* node)
+void SinglyCircularLinkedList::Add(SinglyCircularLinkedListNode* node)
 {
 	if (node == nullptr || node->m_next != nullptr)
 	{
 		throw std::invalid_argument("node");
 	}
 
+	SinglyCircularLinkedListNode* tail{ m_head };
+
+	if (tail != nullptr)
+	{
+		while (tail->m_next != m_head)
+		{
+			tail = tail->m_next;
+		}
+	}
+
 	node->m_next = m_head;
 	m_head = node;
+
+	if (tail != nullptr)
+	{
+		tail->m_next = m_head;
+	}
+	else
+	{
+		m_head->m_next = m_head;
+	}
 
 	m_count++;
 }
 
 /// <summary>
-/// SinglyLinkedList의 지정한 인덱스에 해당하는 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// SinglyCircularLinkedList의 지정한 인덱스에 해당하는 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="index">값을 추가할 인덱스</param>
 /// <param name="value">추가할 값</param>
-void SinglyLinkedList::Insert(size_t index, int value)
+void SinglyCircularLinkedList::Insert(size_t index, int value)
 {
-	SinglyLinkedListNode* newNode{ PopNode(value) };
+	SinglyCircularLinkedListNode* newNode{ PopNode(value) };
 	Insert(index, newNode);
 }
 
 /// <summary>
-/// SinglyLinkedList의 지정한 인덱스에 해당하는 위치에 지정된 노드를 추가한다.
+/// SinglyCircularLinkedList의 지정한 인덱스에 해당하는 위치에 지정된 노드를 추가한다.
 /// </summary>
 /// <param name="index">새 노드를 추가할 인덱스</param>
 /// <param name="node">추가할 새 노드</param>
-void SinglyLinkedList::Insert(size_t index, SinglyLinkedListNode* node)
+void SinglyCircularLinkedList::Insert(size_t index, SinglyCircularLinkedListNode* node)
 {
 	if (index > m_count)
 	{
@@ -113,8 +137,8 @@ void SinglyLinkedList::Insert(size_t index, SinglyLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
-	SinglyLinkedListNode* prevNode{ nullptr };
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* prevNode{ nullptr };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (index--)
 	{
 		prevNode = curNode;
@@ -136,12 +160,12 @@ void SinglyLinkedList::Insert(size_t index, SinglyLinkedListNode* node)
 }
 
 /// <summary>
-/// SinglyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// SinglyCircularLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
 /// </summary>
 /// <param name="value">제거할 값</param>
-bool SinglyLinkedList::Remove(int value)
+bool SinglyCircularLinkedList::Remove(int value)
 {
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -162,18 +186,18 @@ bool SinglyLinkedList::Remove(int value)
 }
 
 /// <summary>
-/// SinglyLinkedList에서 지정된 노드를 제거한다.
+/// SinglyCircularLinkedList에서 지정된 노드를 제거한다.
 /// </summary>
 /// <param name="node">제거할 노드</param>
-void SinglyLinkedList::Remove(const SinglyLinkedListNode* node)
+void SinglyCircularLinkedList::Remove(const SinglyCircularLinkedListNode* node)
 {
 	if (node == nullptr)
 	{
 		throw std::invalid_argument("node");
 	}
 
-	SinglyLinkedListNode* prevNode{ nullptr };
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* prevNode{ nullptr };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -203,13 +227,13 @@ void SinglyLinkedList::Remove(const SinglyLinkedListNode* node)
 }
 
 /// <summary>
-/// SinglyLinkedList의 모든 노드를 제거한다.
+/// SinglyCircularLinkedList의 모든 노드를 제거한다.
 /// </summary>
-void SinglyLinkedList::Clear()
+void SinglyCircularLinkedList::Clear()
 {
 	while (m_head != nullptr)
 	{
-		SinglyLinkedListNode* curNode{ m_head };
+		SinglyCircularLinkedListNode* curNode{ m_head };
 		m_head = m_head->m_next;
 		PushNode(curNode);
 	}
@@ -221,9 +245,9 @@ void SinglyLinkedList::Clear()
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>값의 존재 여부</returns>
-bool SinglyLinkedList::Contains(int value)
+bool SinglyCircularLinkedList::Contains(int value)
 {
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -236,13 +260,13 @@ bool SinglyLinkedList::Contains(int value)
 }
 
 /// <summary>
-/// 지정한 노드가 SinglyLinkedList에 포함되는지 확인한다.
+/// 지정한 노드가 SinglyCircularLinkedList에 포함되는지 확인한다.
 /// </summary>
 /// <param name="node">찾을 노드</param>
 /// <returns>노드의 포함 여부</returns>
-bool SinglyLinkedList::Contains(const SinglyLinkedListNode* node)
+bool SinglyCircularLinkedList::Contains(const SinglyCircularLinkedListNode* node)
 {
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -259,9 +283,9 @@ bool SinglyLinkedList::Contains(const SinglyLinkedListNode* node)
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
-SinglyLinkedListNode* SinglyLinkedList::Find(int value)
+SinglyCircularLinkedListNode* SinglyCircularLinkedList::Find(int value)
 {
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -278,10 +302,10 @@ SinglyLinkedListNode* SinglyLinkedList::Find(int value)
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
-SinglyLinkedListNode* SinglyLinkedList::FindLast(int value)
+SinglyCircularLinkedListNode* SinglyCircularLinkedList::FindLast(int value)
 {
-	SinglyLinkedListNode* matchNode{ nullptr };
-	SinglyLinkedListNode* curNode{ m_head };
+	SinglyCircularLinkedListNode* matchNode{ nullptr };
+	SinglyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -296,16 +320,17 @@ SinglyLinkedListNode* SinglyLinkedList::FindLast(int value)
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
-void SinglyLinkedList::PrintInfo()
+void SinglyCircularLinkedList::PrintInfo()
 {
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Nodes: ";
-	SinglyLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	SinglyCircularLinkedListNode* curNode{ m_head };
+	while (curNode->m_next != m_head)
 	{
 		std::cout << curNode->m_data << ", ";
 		curNode = curNode->m_next;
 	}
+	std::cout << curNode->m_data;
 	std::cout << std::endl;
 }
 #pragma endregion
@@ -316,12 +341,12 @@ void SinglyLinkedList::PrintInfo()
 /// </summary>
 /// <param name="value">노드 생성시 초기값</param>
 /// <returns>새 노드</returns>
-SinglyLinkedListNode* SinglyLinkedList::PopNode(int value)
+SinglyCircularLinkedListNode* SinglyCircularLinkedList::PopNode(int value)
 {
-	SinglyLinkedListNode* newNode{ nullptr };
+	SinglyCircularLinkedListNode* newNode{ nullptr };
 	if (m_free == nullptr)
 	{
-		newNode = new SinglyLinkedListNode(value);
+		newNode = new SinglyCircularLinkedListNode(value);
 	}
 	else
 	{
@@ -338,7 +363,7 @@ SinglyLinkedListNode* SinglyLinkedList::PopNode(int value)
 /// 자유 공간 리스트에 제거된 노드를 저장한다.
 /// </summary>
 /// <param name="node">제거된 노드</param>
-void SinglyLinkedList::PushNode(SinglyLinkedListNode* node)
+void SinglyCircularLinkedList::PushNode(SinglyCircularLinkedListNode* node)
 {
 	node->m_next = m_free;
 	m_free = node;
