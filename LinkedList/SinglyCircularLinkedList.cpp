@@ -84,27 +84,9 @@ void SinglyCircularLinkedList::Add(SinglyCircularLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
-	SinglyCircularLinkedListNode* tail{ m_head };
-
-	if (tail != nullptr)
-	{
-		while (tail->m_next != m_head)
-		{
-			tail = tail->m_next;
-		}
-	}
-
 	node->m_next = m_head;
-	m_head = node;
 
-	if (tail != nullptr)
-	{
-		tail->m_next = m_head;
-	}
-	else
-	{
-		m_head->m_next = m_head;
-	}
+	UpdateHead(node);
 
 	m_count++;
 }
@@ -147,13 +129,13 @@ void SinglyCircularLinkedList::Insert(size_t index, SinglyCircularLinkedListNode
 
 	node->m_next = curNode;
 
-	if (prevNode == nullptr)
+	if (prevNode != nullptr)
 	{
-		m_head = node;
+		prevNode->m_next = node;
 	}
 	else
 	{
-		prevNode->m_next = node;
+		UpdateHead(node);
 	}
 
 	m_count++;
@@ -367,5 +349,37 @@ void SinglyCircularLinkedList::PushNode(SinglyCircularLinkedListNode* node)
 {
 	node->m_next = m_free;
 	m_free = node;
+}
+
+/// <summary>
+/// 리스트의 head를 변경하고 리스트가 원형이 유지되도록 한다.
+/// </summary>
+/// <param name="node">head로 변경할 노드</param>
+void SinglyCircularLinkedList::UpdateHead(SinglyCircularLinkedListNode* node)
+{
+	if (node == nullptr)
+	{
+		throw std::invalid_argument("node");
+	}
+
+	SinglyCircularLinkedListNode* tail{ m_head };
+	if (tail != nullptr)
+	{
+		while (tail->m_next != m_head)
+		{
+			tail = tail->m_next;
+		}
+	}
+
+	m_head = node;
+
+	if (tail != nullptr)
+	{
+		tail->m_next = m_head;
+	}
+	else
+	{
+		m_head->m_next = m_head;
+	}
 }
 #pragma endregion

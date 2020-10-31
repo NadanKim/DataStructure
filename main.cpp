@@ -5,6 +5,8 @@
 int main()
 {
 	SinglyCircularLinkedList a;
-	a.Add(1);
+	a.Insert(0, 1);
+	a.Insert(0, 2);
+	a.Insert(2, 3);
 	a.PrintInfo();
 }

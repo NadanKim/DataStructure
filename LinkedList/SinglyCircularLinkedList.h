@@ -47,6 +47,8 @@ private:
 #pragma region Class Util
 	SinglyCircularLinkedListNode* PopNode(int value);
 	void PushNode(SinglyCircularLinkedListNode* node);
+
+	void UpdateHead(SinglyCircularLinkedListNode* node);
 #pragma endregion
 	
 private:
