@@ -9,4 +9,17 @@ int main()
 	a.Insert(0, 2);
 	a.Insert(2, 3);
 	a.PrintInfo();
+
+	a.Remove(3);
+	a.PrintInfo();
+
+	SinglyCircularLinkedListNode* newNode = new SinglyCircularLinkedListNode(4);
+	a.Add(newNode);
+	a.PrintInfo();
+
+	a.Remove(newNode);
+	a.PrintInfo();
+
+	a.Clear();
+	a.PrintInfo();
 }

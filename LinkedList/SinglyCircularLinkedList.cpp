@@ -44,13 +44,12 @@ SinglyCircularLinkedList::~SinglyCircularLinkedList()
 	if (m_head != nullptr)
 	{
 		SinglyCircularLinkedListNode* head{ m_head };
-		while (m_head->m_next != head)
+		do
 		{
 			SinglyCircularLinkedListNode* curNode{ m_head };
 			m_head = m_head->m_next;
 			delete curNode;
-		}
-		delete m_head;
+		} while (m_head != head);
 	}
 
 	while (m_free != nullptr)
@@ -147,24 +146,21 @@ void SinglyCircularLinkedList::Insert(size_t index, SinglyCircularLinkedListNode
 /// <param name="value">제거할 값</param>
 bool SinglyCircularLinkedList::Remove(int value)
 {
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			break;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				Remove(curNode);
+				return true;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 
-	if (curNode == nullptr)
-	{
-		return false;
-	}
-
-	Remove(curNode);
-
-	return true;
+	return false;
 }
 
 /// <summary>
@@ -178,34 +174,32 @@ void SinglyCircularLinkedList::Remove(const SinglyCircularLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
-	SinglyCircularLinkedListNode* prevNode{ nullptr };
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode == node)
+		SinglyCircularLinkedListNode* prevNode{ nullptr };
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			break;
-		}
-		prevNode = curNode;
-		curNode = curNode->m_next;
+			if (curNode == node)
+			{
+				if (prevNode != nullptr)
+				{
+					prevNode->m_next = curNode->m_next;
+				}
+				else
+				{
+					UpdateHead(curNode->m_next);
+				}
+				PushNode(curNode);
+				m_count--;
+				return;
+			}
+			prevNode = curNode;
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 
-	if (curNode == nullptr)
-	{
-		throw std::out_of_range("node");
-	}
-
-	if (prevNode == nullptr)
-	{
-		m_head = curNode->m_next;
-	}
-	else
-	{
-		prevNode->m_next = curNode->m_next;
-	}
-	PushNode(curNode);
-
-	m_count--;
+	throw std::out_of_range("node");
 }
 
 /// <summary>
@@ -213,11 +207,16 @@ void SinglyCircularLinkedList::Remove(const SinglyCircularLinkedListNode* node)
 /// </summary>
 void SinglyCircularLinkedList::Clear()
 {
-	while (m_head != nullptr)
+	if (m_head != nullptr)
 	{
-		SinglyCircularLinkedListNode* curNode{ m_head };
-		m_head = m_head->m_next;
-		PushNode(curNode);
+		SinglyCircularLinkedListNode* head{ m_head };
+		do
+		{
+			SinglyCircularLinkedListNode* curNode{ m_head };
+			m_head = m_head->m_next;
+			PushNode(curNode);
+		} while (m_head != head);
+		m_head = nullptr;
 	}
 	m_count = 0;
 }
@@ -306,13 +305,15 @@ void SinglyCircularLinkedList::PrintInfo()
 {
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Nodes: ";
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode->m_next != m_head)
+	if (m_head != nullptr)
 	{
-		std::cout << curNode->m_data << ", ";
-		curNode = curNode->m_next;
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
+		{
+			std::cout << curNode->m_data << ", ";
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
-	std::cout << curNode->m_data;
 	std::cout << std::endl;
 }
 #pragma endregion
