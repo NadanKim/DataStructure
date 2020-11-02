@@ -228,14 +228,17 @@ void SinglyCircularLinkedList::Clear()
 /// <returns>값의 존재 여부</returns>
 bool SinglyCircularLinkedList::Contains(int value)
 {
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return true;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				return true;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return false;
 }
@@ -247,14 +250,17 @@ bool SinglyCircularLinkedList::Contains(int value)
 /// <returns>노드의 포함 여부</returns>
 bool SinglyCircularLinkedList::Contains(const SinglyCircularLinkedListNode* node)
 {
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode == node)
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return true;
-		}
-		curNode = curNode->m_next;
+			if (curNode == node)
+			{
+				return true;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return false;
 }
@@ -266,14 +272,17 @@ bool SinglyCircularLinkedList::Contains(const SinglyCircularLinkedListNode* node
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
 SinglyCircularLinkedListNode* SinglyCircularLinkedList::Find(int value)
 {
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return curNode;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				return curNode;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return nullptr;
 }
@@ -286,14 +295,18 @@ SinglyCircularLinkedListNode* SinglyCircularLinkedList::Find(int value)
 SinglyCircularLinkedListNode* SinglyCircularLinkedList::FindLast(int value)
 {
 	SinglyCircularLinkedListNode* matchNode{ nullptr };
-	SinglyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		SinglyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			matchNode = curNode;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				matchNode = curNode;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return matchNode;
 }

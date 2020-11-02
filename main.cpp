@@ -17,9 +17,11 @@ int main()
 	a.Add(newNode);
 	a.PrintInfo();
 
-	a.Remove(newNode);
+	a.Insert(3, 4);
 	a.PrintInfo();
 
-	a.Clear();
-	a.PrintInfo();
+	SinglyCircularLinkedListNode* foundNode = a.FindLast(4);
+	std::cout << foundNode << ' ' << newNode << '\n';
+
+	std::cout << std::boolalpha << a.Contains(3) << '\n';
 }
