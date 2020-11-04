@@ -10,7 +10,7 @@ DoublyLinkedList::DoublyLinkedList()
 }
 
 /// <summary>
-/// 다른 SinglyLinkedList가 가지고 있는 노드를 복사해 SinglyLinkedList를 생성한다.
+/// 다른 DoublyLinkedList가 가지고 있는 노드를 복사해 DoublyLinkedList를 생성한다.
 /// </summary>
 /// <param name="other">기준이 될 DoublyLinkedList</param>
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
@@ -62,7 +62,7 @@ DoublyLinkedList::~DoublyLinkedList()
 
 #pragma region 메서드
 /// <summary>
-/// SinglyLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// DoublyLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
 void DoublyLinkedList::AddFirst(int value)
@@ -72,7 +72,7 @@ void DoublyLinkedList::AddFirst(int value)
 }
 
 /// <summary>
-/// SinglyLinkedList의 시작 위치에 지정한 노드를 추가한다.
+/// DoublyLinkedList의 시작 위치에 지정한 노드를 추가한다.
 /// </summary>
 /// <param name="node">추가할 새 노드</param>
 void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
@@ -97,7 +97,7 @@ void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
 }
 
 /// <summary>
-/// SinglyLinkedList의 끝 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// DoublyLinkedList의 끝 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
 void DoublyLinkedList::AddLast(int value)
@@ -107,7 +107,7 @@ void DoublyLinkedList::AddLast(int value)
 }
 
 /// <summary>
-/// SinglyLinkedList의 끝 위치에 지정한 노드를 추가한다.
+/// DoublyLinkedList의 끝 위치에 지정한 노드를 추가한다.
 /// </summary>
 /// <param name="node">추가할 새 노드</param>
 void DoublyLinkedList::AddLast(DoublyLinkedListNode* node)
