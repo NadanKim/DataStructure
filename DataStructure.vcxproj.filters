@@ -14,6 +14,9 @@
     <ClCompile Include="LinkedList\SinglyCircularLinkedList.cpp">
       <Filter>LinkedList</Filter>
     </ClCompile>
+    <ClCompile Include="LinkedList\DoublyCircularLinkedList.cpp">
+      <Filter>LinkedList</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -34,6 +37,9 @@
       <Filter>LinkedList</Filter>
     </ClInclude>
     <ClInclude Include="LinkedList\SinglyCircularLinkedList.h">
+      <Filter>LinkedList</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList\DoublyCircularLinkedList.h">
       <Filter>LinkedList</Filter>
     </ClInclude>
   </ItemGroup>

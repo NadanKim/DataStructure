@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArrayList\ArrayList.cpp" />
+    <ClCompile Include="LinkedList\DoublyCircularLinkedList.cpp" />
     <ClCompile Include="LinkedList\DoublyLinkedList.cpp" />
     <ClCompile Include="LinkedList\SinglyCircularLinkedList.cpp" />
     <ClCompile Include="LinkedList\SinglyLinkedList.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayList\ArrayList.h" />
+    <ClInclude Include="LinkedList\DoublyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\DoublyLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyLinkedList.h" />

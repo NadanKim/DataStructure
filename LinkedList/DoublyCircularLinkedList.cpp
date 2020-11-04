@@ -1,10 +1,10 @@
-﻿#include "DoublyLinkedList.h"
+﻿#include "DoublyCircularLinkedList.h"
 
 #pragma region 생성자
 /// <summary>
-/// 비어있는 DoublyLinkedList를 생성한다.
+/// 비어있는 DoublyCircularLinkedList를 생성한다.
 /// </summary>
-DoublyLinkedList::DoublyLinkedList()
+DoublyCircularLinkedList::DoublyCircularLinkedList()
 	: m_count(0), m_head(nullptr), m_tail(nullptr), m_free(nullptr)
 {
 }
@@ -12,8 +12,8 @@ DoublyLinkedList::DoublyLinkedList()
 /// <summary>
 /// 다른 SinglyLinkedList가 가지고 있는 노드를 복사해 SinglyLinkedList를 생성한다.
 /// </summary>
-/// <param name="other">기준이 될 DoublyLinkedList</param>
-DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
+/// <param name="other">기준이 될 DoublyCircularLinkedList</param>
+DoublyCircularLinkedList::DoublyCircularLinkedList(const DoublyCircularLinkedList& other)
 	: m_count(other.m_count), m_head(nullptr), m_tail(nullptr), m_free(nullptr)
 {
 	if (other.m_head == nullptr)
@@ -21,39 +21,43 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other)
 		return;
 	}
 
-	DoublyLinkedListNode* curNode{ other.m_head };
+	DoublyCircularLinkedListNode* curNode{ other.m_head };
 
-	if (curNode != nullptr)
-	{
-		m_head = m_tail = PopNode(curNode->m_data);
-		curNode = curNode->m_next;
-	}
+	m_head = m_tail = PopNode(curNode->m_data);
+	curNode = curNode->m_next;
 
-	while (curNode != nullptr)
+	while (curNode->m_prev != other.m_tail)
 	{
-		DoublyLinkedListNode* newNode{ PopNode(curNode->m_data) };
+		DoublyCircularLinkedListNode* newNode{ PopNode(curNode->m_data) };
 		m_tail->m_next = newNode;
 		newNode->m_prev = m_tail;
 		m_tail = newNode;
 		curNode = curNode->m_next;
 	}
+
+	m_head->m_prev = m_tail;
+	m_tail->m_next = m_head;
 }
 
 /// <summary>
 /// 메모리 누수를 막기 위해 동적 생성한 노드들을 제거한다.
 /// </summary>
-DoublyLinkedList::~DoublyLinkedList()
+DoublyCircularLinkedList::~DoublyCircularLinkedList()
 {
-	while (m_head != nullptr)
+	if (m_head != nullptr)
 	{
-		DoublyLinkedListNode* curNode{ m_head };
-		m_head = m_head->m_next;
-		delete curNode;
+		DoublyCircularLinkedListNode* head{ m_head };
+		do
+		{
+			DoublyCircularLinkedListNode* curNode{ m_head };
+			m_head = m_head->m_next;
+			delete curNode;
+		} while (m_head != head);
 	}
 
 	while (m_free != nullptr)
 	{
-		DoublyLinkedListNode* curNode{ m_free };
+		DoublyCircularLinkedListNode* curNode{ m_free };
 		m_free = m_free->m_next;
 		delete curNode;
 	}
@@ -65,9 +69,9 @@ DoublyLinkedList::~DoublyLinkedList()
 /// SinglyLinkedList의 시작 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
-void DoublyLinkedList::AddFirst(int value)
+void DoublyCircularLinkedList::AddFirst(int value)
 {
-	DoublyLinkedListNode* newNode{ PopNode(value) };
+	DoublyCircularLinkedListNode* newNode{ PopNode(value) };
 	AddFirst(newNode);
 }
 
@@ -75,7 +79,7 @@ void DoublyLinkedList::AddFirst(int value)
 /// SinglyLinkedList의 시작 위치에 지정한 노드를 추가한다.
 /// </summary>
 /// <param name="node">추가할 새 노드</param>
-void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
+void DoublyCircularLinkedList::AddFirst(DoublyCircularLinkedListNode* node)
 {
 	if (node == nullptr || node->m_prev != nullptr || node->m_next != nullptr)
 	{
@@ -93,6 +97,9 @@ void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
 		m_head = m_tail = node;
 	}
 
+	m_head->m_prev = m_tail;
+	m_tail->m_next = m_head;
+
 	m_count++;
 }
 
@@ -100,9 +107,9 @@ void DoublyLinkedList::AddFirst(DoublyLinkedListNode* node)
 /// SinglyLinkedList의 끝 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
-void DoublyLinkedList::AddLast(int value)
+void DoublyCircularLinkedList::AddLast(int value)
 {
-	DoublyLinkedListNode* newNode{ PopNode(value) };
+	DoublyCircularLinkedListNode* newNode{ PopNode(value) };
 	AddLast(newNode);
 }
 
@@ -110,7 +117,7 @@ void DoublyLinkedList::AddLast(int value)
 /// SinglyLinkedList의 끝 위치에 지정한 노드를 추가한다.
 /// </summary>
 /// <param name="node">추가할 새 노드</param>
-void DoublyLinkedList::AddLast(DoublyLinkedListNode* node)
+void DoublyCircularLinkedList::AddLast(DoublyCircularLinkedListNode* node)
 {
 	if (node == nullptr || node->m_prev != nullptr || node->m_next != nullptr)
 	{
@@ -132,22 +139,22 @@ void DoublyLinkedList::AddLast(DoublyLinkedListNode* node)
 }
 
 /// <summary>
-/// DoublyLinkedList의 지정한 인덱스에 해당하는 위치에 지정한 값이 포함된 새 노드를 추가한다.
+/// DoublyCircularLinkedList의 지정한 인덱스에 해당하는 위치에 지정한 값이 포함된 새 노드를 추가한다.
 /// </summary>
 /// <param name="index">값을 추가할 인덱스</param>
 /// <param name="value">추가할 값</param>
-void DoublyLinkedList::Insert(size_t index, int value)
+void DoublyCircularLinkedList::Insert(size_t index, int value)
 {
-	DoublyLinkedListNode* newNode{ PopNode(value) };
+	DoublyCircularLinkedListNode* newNode{ PopNode(value) };
 	Insert(index, newNode);
 }
 
 /// <summary>
-/// DoublyLinkedList의 지정한 인덱스에 해당하는 위치에 지정된 노드를 추가한다.
+/// DoublyCircularLinkedList의 지정한 인덱스에 해당하는 위치에 지정된 노드를 추가한다.
 /// </summary>
 /// <param name="index">새 노드를 추가할 인덱스</param>
 /// <param name="node">추가할 새 노드</param>
-void DoublyLinkedList::Insert(size_t index, DoublyLinkedListNode* node)
+void DoublyCircularLinkedList::Insert(size_t index, DoublyCircularLinkedListNode* node)
 {
 	if (index > m_count)
 	{
@@ -159,13 +166,13 @@ void DoublyLinkedList::Insert(size_t index, DoublyLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (index--)
 	{
 		curNode = curNode->m_next;
 	}
 
-	DoublyLinkedListNode* prevNode{ curNode != nullptr ? curNode->m_prev : nullptr };
+	DoublyCircularLinkedListNode* prevNode{ curNode != nullptr ? curNode->m_prev : nullptr };
 	node->m_prev = prevNode;
 	if (prevNode != nullptr)
 	{
@@ -190,12 +197,12 @@ void DoublyLinkedList::Insert(size_t index, DoublyLinkedListNode* node)
 }
 
 /// <summary>
-/// DoublyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// DoublyCircularLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
 /// </summary>
 /// <param name="value">제거할 값</param>
-bool DoublyLinkedList::RemoveFirst(int value)
+bool DoublyCircularLinkedList::RemoveFirst(int value)
 {
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -216,12 +223,12 @@ bool DoublyLinkedList::RemoveFirst(int value)
 }
 
 /// <summary>
-/// DoublyLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
+/// DoublyCircularLinkedList에서 가장 처음 일치한 지정된 값을 포함한 노드를 제거한다.
 /// </summary>
 /// <param name="value">제거할 값</param>
-bool DoublyLinkedList::RemoveLast(int value)
+bool DoublyCircularLinkedList::RemoveLast(int value)
 {
-	DoublyLinkedListNode* curNode{ m_tail };
+	DoublyCircularLinkedListNode* curNode{ m_tail };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -242,17 +249,17 @@ bool DoublyLinkedList::RemoveLast(int value)
 }
 
 /// <summary>
-/// DoublyLinkedList에서 지정된 노드를 제거한다.
+/// DoublyCircularLinkedList에서 지정된 노드를 제거한다.
 /// </summary>
 /// <param name="node">제거할 노드</param>
-void DoublyLinkedList::Remove(const DoublyLinkedListNode* node)
+void DoublyCircularLinkedList::Remove(const DoublyCircularLinkedListNode* node)
 {
 	if (node == nullptr)
 	{
 		throw std::invalid_argument("node");
 	}
 
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -267,8 +274,8 @@ void DoublyLinkedList::Remove(const DoublyLinkedListNode* node)
 		throw std::out_of_range("node");
 	}
 
-	DoublyLinkedListNode* prevNode{ curNode->m_prev };
-	DoublyLinkedListNode* nextNode{ curNode->m_next };
+	DoublyCircularLinkedListNode* prevNode{ curNode->m_prev };
+	DoublyCircularLinkedListNode* nextNode{ curNode->m_next };
 	if (prevNode != nullptr)
 	{
 		prevNode->m_next = nextNode;
@@ -293,13 +300,13 @@ void DoublyLinkedList::Remove(const DoublyLinkedListNode* node)
 }
 
 /// <summary>
-/// DoublyLinkedList의 모든 노드를 제거한다.
+/// DoublyCircularLinkedList의 모든 노드를 제거한다.
 /// </summary>
-void DoublyLinkedList::Clear()
+void DoublyCircularLinkedList::Clear()
 {
 	while (m_head != nullptr)
 	{
-		DoublyLinkedListNode* curNode{ m_head };
+		DoublyCircularLinkedListNode* curNode{ m_head };
 		m_head = m_head->m_next;
 		PushNode(curNode);
 	}
@@ -311,9 +318,9 @@ void DoublyLinkedList::Clear()
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>값의 존재 여부</returns>
-bool DoublyLinkedList::Contains(int value)
+bool DoublyCircularLinkedList::Contains(int value)
 {
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -326,13 +333,13 @@ bool DoublyLinkedList::Contains(int value)
 }
 
 /// <summary>
-/// 지정한 노드가 DoublyLinkedList에 포함되는지 확인한다.
+/// 지정한 노드가 DoublyCircularLinkedList에 포함되는지 확인한다.
 /// </summary>
 /// <param name="node">찾을 노드</param>
 /// <returns>노드의 포함 여부</returns>
-bool DoublyLinkedList::Contains(const DoublyLinkedListNode* node)
+bool DoublyCircularLinkedList::Contains(const DoublyCircularLinkedListNode* node)
 {
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode == node)
@@ -349,9 +356,9 @@ bool DoublyLinkedList::Contains(const DoublyLinkedListNode* node)
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
-DoublyLinkedListNode* DoublyLinkedList::Find(int value)
+DoublyCircularLinkedListNode* DoublyCircularLinkedList::Find(int value)
 {
-	DoublyLinkedListNode* curNode{ m_head };
+	DoublyCircularLinkedListNode* curNode{ m_head };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -368,9 +375,9 @@ DoublyLinkedListNode* DoublyLinkedList::Find(int value)
 /// </summary>
 /// <param name="value">찾을 값</param>
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
-DoublyLinkedListNode* DoublyLinkedList::FindLast(int value)
+DoublyCircularLinkedListNode* DoublyCircularLinkedList::FindLast(int value)
 {
-	DoublyLinkedListNode* curNode{ m_tail };
+	DoublyCircularLinkedListNode* curNode{ m_tail };
 	while (curNode != nullptr)
 	{
 		if (curNode->m_data == value)
@@ -385,18 +392,21 @@ DoublyLinkedListNode* DoublyLinkedList::FindLast(int value)
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
-void DoublyLinkedList::PrintInfo(bool isPrintReverse)
+void DoublyCircularLinkedList::PrintInfo(bool isPrintReverse)
 {
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Nodes: ";
 
-	DoublyLinkedListNode* curNode{ isPrintReverse ? m_tail : m_head };
-	while (curNode != nullptr)
+	DoublyCircularLinkedListNode* curNode{ isPrintReverse ? m_tail : m_head };
+	if (curNode != nullptr)
 	{
-		std::cout << curNode->m_data << ", ";
-		curNode = isPrintReverse ? curNode->m_prev : curNode->m_next;
+		do
+		{
+			std::cout << curNode->m_data << ", ";
+			curNode = isPrintReverse ? curNode->m_prev : curNode->m_next;
+		} while (isPrintReverse ? curNode->m_next != m_head : curNode->m_prev != m_tail);
+		std::cout << std::endl;
 	}
-	std::cout << std::endl;
 }
 #pragma endregion
 
@@ -406,12 +416,12 @@ void DoublyLinkedList::PrintInfo(bool isPrintReverse)
 /// </summary>
 /// <param name="value">노드 생성시 초기값</param>
 /// <returns>새 노드</returns>
-DoublyLinkedListNode* DoublyLinkedList::PopNode(int value)
+DoublyCircularLinkedListNode* DoublyCircularLinkedList::PopNode(int value)
 {
-	DoublyLinkedListNode* newNode{ nullptr };
+	DoublyCircularLinkedListNode* newNode{ nullptr };
 	if (m_free == nullptr)
 	{
-		newNode = new DoublyLinkedListNode(value);
+		newNode = new DoublyCircularLinkedListNode(value);
 	}
 	else
 	{
@@ -429,7 +439,7 @@ DoublyLinkedListNode* DoublyLinkedList::PopNode(int value)
 /// 자유 공간 리스트에 제거된 노드를 저장한다.
 /// </summary>
 /// <param name="node">제거된 노드</param>
-void DoublyLinkedList::PushNode(DoublyLinkedListNode* node)
+void DoublyCircularLinkedList::PushNode(DoublyCircularLinkedListNode* node)
 {
 	node->m_prev = nullptr;
 	node->m_next = m_free;
