@@ -135,6 +135,9 @@ void DoublyCircularLinkedList::AddLast(DoublyCircularLinkedListNode* node)
 		m_head = m_tail = node;
 	}
 
+	m_head->m_prev = m_tail;
+	m_tail->m_next = m_head;
+
 	m_count++;
 }
 
@@ -167,12 +170,13 @@ void DoublyCircularLinkedList::Insert(size_t index, DoublyCircularLinkedListNode
 	}
 
 	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (index--)
+	DoublyCircularLinkedListNode* prevNode{ m_tail };
+	for (int i = 0; i < index; i++)
 	{
+		prevNode = curNode;
 		curNode = curNode->m_next;
 	}
 
-	DoublyCircularLinkedListNode* prevNode{ curNode != nullptr ? curNode->m_prev : nullptr };
 	node->m_prev = prevNode;
 	if (prevNode != nullptr)
 	{
@@ -184,11 +188,11 @@ void DoublyCircularLinkedList::Insert(size_t index, DoublyCircularLinkedListNode
 		curNode->m_prev = node;
 	}
 
-	if (node->m_prev == nullptr)
+	if (index == 0)
 	{
 		m_head = node;
 	}
-	if (node->m_next == nullptr)
+	if (index == m_count)
 	{
 		m_tail = node;
 	}

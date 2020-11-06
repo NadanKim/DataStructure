@@ -10,6 +10,10 @@ int main()
 	a.AddFirst(3);
 	a.PrintInfo();
 
-	DoublyCircularLinkedList b(a);
-	b.PrintInfo();
+	DoublyCircularLinkedListNode* newNode = new DoublyCircularLinkedListNode(4);
+	a.AddLast(newNode);
+	a.PrintInfo();
+
+	a.Insert(4, 5);
+	a.PrintInfo();
 }
