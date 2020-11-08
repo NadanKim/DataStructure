@@ -22,7 +22,7 @@ public:
 #pragma endregion
 
 #pragma region 속성
-	const int Count() { return m_count; }
+	const size_t Count() { return m_count; }
 	DoublyCircularLinkedListNode& First() { return *m_head; }
 	DoublyCircularLinkedListNode& Last() { return *m_tail; }
 #pragma endregion

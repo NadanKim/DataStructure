@@ -304,6 +304,7 @@ void DoublyLinkedList::Clear()
 		m_head = m_head->m_next;
 		PushNode(curNode);
 	}
+	m_head = m_tail = nullptr;
 	m_count = 0;
 }
 

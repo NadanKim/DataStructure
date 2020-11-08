@@ -206,17 +206,23 @@ void DoublyCircularLinkedList::Insert(size_t index, DoublyCircularLinkedListNode
 /// <param name="value">제거할 값</param>
 bool DoublyCircularLinkedList::RemoveFirst(int value)
 {
+	bool foundNode{ false };
 	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		do
 		{
-			break;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				foundNode = true;
+				break;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 
-	if (curNode == nullptr)
+	if (!foundNode)
 	{
 		return false;
 	}
@@ -232,17 +238,23 @@ bool DoublyCircularLinkedList::RemoveFirst(int value)
 /// <param name="value">제거할 값</param>
 bool DoublyCircularLinkedList::RemoveLast(int value)
 {
+	bool foundNode{ false };
 	DoublyCircularLinkedListNode* curNode{ m_tail };
-	while (curNode != nullptr)
+
+	if (m_tail != nullptr)
 	{
-		if (curNode->m_data == value)
+		do
 		{
-			break;
-		}
-		curNode = curNode->m_prev;
+			if (curNode->m_data == value)
+			{
+				foundNode = true;
+				break;
+			}
+			curNode = curNode->m_prev;
+		} while (curNode != m_tail);
 	}
 
-	if (curNode == nullptr)
+	if (!foundNode)
 	{
 		return false;
 	}
@@ -263,39 +275,44 @@ void DoublyCircularLinkedList::Remove(const DoublyCircularLinkedListNode* node)
 		throw std::invalid_argument("node");
 	}
 
+	bool foundNode{ false };
 	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	
+	if (m_head != nullptr)
 	{
-		if (curNode == node)
+		do
 		{
-			break;
-		}
-		curNode = curNode->m_next;
+			if (curNode == node)
+			{
+				foundNode = true;
+				break;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 
-	if (curNode == nullptr)
+	if (!foundNode)
 	{
 		throw std::out_of_range("node");
 	}
 
 	DoublyCircularLinkedListNode* prevNode{ curNode->m_prev };
 	DoublyCircularLinkedListNode* nextNode{ curNode->m_next };
-	if (prevNode != nullptr)
-	{
-		prevNode->m_next = nextNode;
-	}
-	else
+	prevNode->m_next = nextNode;
+	if (prevNode == m_tail)
 	{
 		m_head = nextNode;
 	}
 
-	if (nextNode != nullptr)
-	{
-		nextNode->m_prev = prevNode;
-	}
-	else
+	nextNode->m_prev = prevNode;
+	if (nextNode == m_head)
 	{
 		m_tail = prevNode;
+	}
+
+	if (m_head == m_tail && m_tail == curNode)
+	{
+		m_head = m_tail = nullptr;
 	}
 
 	PushNode(curNode);
@@ -308,12 +325,17 @@ void DoublyCircularLinkedList::Remove(const DoublyCircularLinkedListNode* node)
 /// </summary>
 void DoublyCircularLinkedList::Clear()
 {
-	while (m_head != nullptr)
+	if (m_head != nullptr)
 	{
-		DoublyCircularLinkedListNode* curNode{ m_head };
-		m_head = m_head->m_next;
-		PushNode(curNode);
+		DoublyCircularLinkedListNode* head{ m_head };
+		do
+		{
+			DoublyCircularLinkedListNode* curNode{ m_head };
+			m_head = m_head->m_next;
+			PushNode(curNode);
+		} while (m_head != head);
 	}
+	m_head = m_tail = nullptr;
 	m_count = 0;
 }
 

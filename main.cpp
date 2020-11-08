@@ -16,4 +16,10 @@ int main()
 
 	a.Insert(4, 5);
 	a.PrintInfo();
+
+	a.AddLast(1);
+	a.PrintInfo();
+
+	a.Clear();
+	a.PrintInfo();
 }
