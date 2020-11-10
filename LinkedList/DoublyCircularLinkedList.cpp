@@ -324,14 +324,17 @@ void DoublyCircularLinkedList::Clear()
 /// <returns>값의 존재 여부</returns>
 bool DoublyCircularLinkedList::Contains(int value)
 {
-	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		DoublyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return true;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				return true;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return false;
 }
@@ -343,14 +346,17 @@ bool DoublyCircularLinkedList::Contains(int value)
 /// <returns>노드의 포함 여부</returns>
 bool DoublyCircularLinkedList::Contains(const DoublyCircularLinkedListNode* node)
 {
-	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode == node)
+		DoublyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return true;
-		}
-		curNode = curNode->m_next;
+			if (curNode == node)
+			{
+				return true;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return false;
 }
@@ -362,14 +368,17 @@ bool DoublyCircularLinkedList::Contains(const DoublyCircularLinkedListNode* node
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
 DoublyCircularLinkedListNode* DoublyCircularLinkedList::Find(int value)
 {
-	DoublyCircularLinkedListNode* curNode{ m_head };
-	while (curNode != nullptr)
+	if (m_head != nullptr)
 	{
-		if (curNode->m_data == value)
+		DoublyCircularLinkedListNode* curNode{ m_head };
+		do
 		{
-			return curNode;
-		}
-		curNode = curNode->m_next;
+			if (curNode->m_data == value)
+			{
+				return curNode;
+			}
+			curNode = curNode->m_next;
+		} while (curNode != m_head);
 	}
 	return nullptr;
 }
@@ -381,14 +390,17 @@ DoublyCircularLinkedListNode* DoublyCircularLinkedList::Find(int value)
 /// <returns>지정한 값을 포함하는 노드(없는 경우: nullptr)</returns>
 DoublyCircularLinkedListNode* DoublyCircularLinkedList::FindLast(int value)
 {
-	DoublyCircularLinkedListNode* curNode{ m_tail };
-	while (curNode != nullptr)
+	if (m_tail != nullptr)
 	{
-		if (curNode->m_data == value)
+		DoublyCircularLinkedListNode* curNode{ m_tail };
+		do
 		{
-			return curNode;
-		}
-		curNode = curNode->m_prev;
+			if (curNode->m_data == value)
+			{
+				return curNode;
+			}
+			curNode = curNode->m_prev;
+		} while (curNode != m_tail);
 	}
 	return nullptr;
 }
