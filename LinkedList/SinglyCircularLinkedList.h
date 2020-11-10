@@ -21,7 +21,7 @@ public:
 #pragma endregion
 
 #pragma region 속성
-	const int Count() { return m_count; }
+	const size_t Count() { return m_count; }
 	SinglyCircularLinkedListNode& Front() { return *m_head; }
 #pragma endregion
 
