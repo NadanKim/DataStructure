@@ -17,6 +17,9 @@
     <ClCompile Include="LinkedList\DoublyCircularLinkedList.cpp">
       <Filter>LinkedList</Filter>
     </ClCompile>
+    <ClCompile Include="Stack\ArrayListStack.cpp">
+      <Filter>Stack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -24,6 +27,9 @@
     </Filter>
     <Filter Include="LinkedList">
       <UniqueIdentifier>{2c80d31a-38ad-43ce-ba5d-d6b13ed3cbc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stack">
+      <UniqueIdentifier>{385ebff3-d6e4-4791-b251-4099626cc1e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="LinkedList\DoublyCircularLinkedList.h">
       <Filter>LinkedList</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack\ArrayListStack.h">
+      <Filter>Stack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
