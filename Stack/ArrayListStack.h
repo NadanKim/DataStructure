@@ -1,6 +1,5 @@
 ﻿#pragma once
-#include <xutility>
-#include <iostream>
+#include "../ArrayList/ArrayList.h"
 
 class ArrayListStack
 {
@@ -11,7 +10,7 @@ public:
 #pragma endregion
 
 #pragma region 속성
-	const size_t Count() { return m_count; }
+	const size_t Count() { return m_items.Count(); }
 #pragma endregion
 
 #pragma region 메서드
@@ -22,11 +21,13 @@ public:
 	void Clear();
 
 	bool Contains(int value);
+
+	void PrintInfo();
 #pragma endregion
 
 private:
 #pragma region 변수
-	size_t m_count;
-	int* m_items;
+	int m_top;
+	ArrayList m_items;
 #pragma endregion
 };
