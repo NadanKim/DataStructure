@@ -22,6 +22,16 @@ ArrayListStack::ArrayListStack(const ArrayListStack& other)
 
 #pragma region 메서드
 /// <summary>
+/// ArrayListStack의 맨 위에 값을 추가한다.
+/// </summary>
+/// <param name="value">추가할 값</param>
+void ArrayListStack::Push(int value)
+{
+	m_top += 1;
+	m_items.Add(value);
+}
+
+/// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
 void ArrayListStack::PrintInfo()
