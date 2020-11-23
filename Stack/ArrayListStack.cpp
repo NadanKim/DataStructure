@@ -32,6 +32,44 @@ void ArrayListStack::Push(int value)
 }
 
 /// <summary>
+/// ArrayListStack의 최상위 값을 제거하지 않고 반환한다.
+/// </summary>
+/// <returns>최상위에 있는 값</returns>
+int ArrayListStack::Peek()
+{
+	if (m_top <= 0)
+	{
+		throw std::out_of_range("empty");
+	}
+
+	return m_items.Item(m_top - 1);
+}
+
+/// <summary>
+/// ArrayListStack의 최상위 값을 제거한 뒤 반환한다.
+/// </summary>
+/// <returns>최상위에 있던 값</returns>
+int ArrayListStack::Pop()
+{
+	if (m_top <= 0)
+	{
+		throw std::out_of_range("empty");
+	}
+
+	m_top--;
+	return m_items.Item(m_top);
+}
+
+/// <summary>
+/// ArrayListStack의 모든 값을 제거한다.
+/// </summary>
+void ArrayListStack::Clear()
+{
+	m_top = 0;
+	m_items.Clear();
+}
+
+/// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
 void ArrayListStack::PrintInfo()
