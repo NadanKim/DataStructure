@@ -70,6 +70,16 @@ void ArrayListStack::Clear()
 }
 
 /// <summary>
+/// ArrayListStack에 지정한 값이 존재하는지 확인한다.
+/// </summary>
+/// <param name="value">ArrayListStack에서 찾을 값</param>
+/// <returns>값의 존재 여부</returns>
+bool ArrayListStack::Contains(int value)
+{
+	return m_items.Contains(value);
+}
+
+/// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
 void ArrayListStack::PrintInfo()
