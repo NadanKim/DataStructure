@@ -24,5 +24,5 @@
     > [ArrayListStack.h](https://github.com/NadanKim/DataStructure/blob/master/Stack/ArrayListStack.h)   
     > [ArrayListStack.cpp](https://github.com/NadanKim/DataStructure/blob/master/Stack/ArrayListStack.cpp)   
   * 연결 리스트 스택(LinkedListStack)
-    > LinkedListStack.h   
-    > LinkedListStack.cpp   
+    > [LinkedListStack.h](https://github.com/NadanKim/DataStructure/blob/master/Stack/LinkedListStack.h)   
+    > [LinkedListStack.cpp](https://github.com/NadanKim/DataStructure/blob/master/Stack/LinkedListStack.cpp)   
