@@ -20,6 +20,9 @@
     <ClCompile Include="Stack\ArrayListStack.cpp">
       <Filter>Stack</Filter>
     </ClCompile>
+    <ClCompile Include="Stack\LinkedListStack.cpp">
+      <Filter>Stack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -49,6 +52,9 @@
       <Filter>LinkedList</Filter>
     </ClInclude>
     <ClInclude Include="Stack\ArrayListStack.h">
+      <Filter>Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack\LinkedListStack.h">
       <Filter>Stack</Filter>
     </ClInclude>
   </ItemGroup>

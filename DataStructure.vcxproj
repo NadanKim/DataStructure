@@ -154,6 +154,7 @@
     <ClCompile Include="LinkedList\SinglyLinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Stack\ArrayListStack.cpp" />
+    <ClCompile Include="Stack\LinkedListStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayList\ArrayList.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="LinkedList\SinglyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyLinkedList.h" />
     <ClInclude Include="Stack\ArrayListStack.h" />
+    <ClInclude Include="Stack\LinkedListStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

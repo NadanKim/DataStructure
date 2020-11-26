@@ -161,7 +161,7 @@ void DoublyLinkedList::Insert(size_t index, DoublyLinkedListNode* node)
 
 	DoublyLinkedListNode* curNode{ m_head };
 	DoublyLinkedListNode* prevNode{ curNode != nullptr ? curNode->m_prev : nullptr };
-	for (int i = 0; i < index; i++)
+	for (size_t i = 0; i < index; i++)
 	{
 		prevNode = curNode;
 		curNode = curNode != nullptr ? curNode->m_next : nullptr;

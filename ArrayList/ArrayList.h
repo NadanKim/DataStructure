@@ -12,8 +12,8 @@ public:
 #pragma endregion
 
 #pragma region 속성
-	const int Capacity() { return m_capacity; }
-	const int Count() { return m_count; }
+	const size_t Capacity() { return m_capacity; }
+	const size_t Count() { return m_count; }
 	int& Item(size_t index) {
 		if (index >= m_count)
 		{

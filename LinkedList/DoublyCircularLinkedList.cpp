@@ -171,7 +171,7 @@ void DoublyCircularLinkedList::Insert(size_t index, DoublyCircularLinkedListNode
 
 	DoublyCircularLinkedListNode* curNode{ m_head };
 	DoublyCircularLinkedListNode* prevNode{ m_tail };
-	for (int i = 0; i < index; i++)
+	for (size_t i = 0; i < index; i++)
 	{
 		prevNode = curNode;
 		curNode = curNode->m_next;
