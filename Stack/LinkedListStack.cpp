@@ -5,8 +5,8 @@
 /// 비어있고 초기 용량을 가지는 LinkedListStack를 생성한다.
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
-LinkedListStack::LinkedListStack(int capacity)
-	: m_top(0), m_items(capacity)
+LinkedListStack::LinkedListStack()
+	: m_top(0)
 {
 }
 

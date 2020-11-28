@@ -5,7 +5,7 @@ class LinkedListStack
 {
 public:
 #pragma region 생성자
-	LinkedListStack(int capacity = 10);
+	LinkedListStack();
 	LinkedListStack(const LinkedListStack& other);
 #pragma endregion
 
