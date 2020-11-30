@@ -4,9 +4,7 @@
 /// <summary>
 /// 비어있고 초기 용량을 가지는 LinkedListStack를 생성한다.
 /// </summary>
-/// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
 LinkedListStack::LinkedListStack()
-	: m_top(0)
 {
 }
 
@@ -15,7 +13,7 @@ LinkedListStack::LinkedListStack()
 /// </summary>
 /// <param name="other">기준이 될 LinkedListStack</param>
 LinkedListStack::LinkedListStack(const LinkedListStack& other)
-	: m_top(other.m_top), m_items(other.m_items)
+	: m_items(other.m_items)
 {
 }
 #pragma endregion
@@ -27,7 +25,6 @@ LinkedListStack::LinkedListStack(const LinkedListStack& other)
 /// <param name="value">추가할 값</param>
 void LinkedListStack::Push(int value)
 {
-	m_top += 1;
 	m_items.Add(value);
 }
 
@@ -37,12 +34,12 @@ void LinkedListStack::Push(int value)
 /// <returns>최상위에 있는 값</returns>
 int LinkedListStack::Peek()
 {
-	if (m_top <= 0)
+	if (m_items.Count() <= 0)
 	{
 		throw std::out_of_range("empty");
 	}
-
-	return m_items.Item(m_top - 1);
+	
+	return m_items.Front().m_data;
 }
 
 /// <summary>
@@ -51,13 +48,17 @@ int LinkedListStack::Peek()
 /// <returns>최상위에 있던 값</returns>
 int LinkedListStack::Pop()
 {
-	if (m_top <= 0)
+	if (m_items.Count() <= 0)
 	{
 		throw std::out_of_range("empty");
 	}
 
-	m_top--;
-	return m_items.Item(m_top);
+	SinglyLinkedListNode& topNode{ m_items.Front() };
+	int data{ topNode.m_data };
+
+	m_items.Remove(&topNode);
+
+	return data;
 }
 
 /// <summary>
@@ -65,7 +66,6 @@ int LinkedListStack::Pop()
 /// </summary>
 void LinkedListStack::Clear()
 {
-	m_top = 0;
 	m_items.Clear();
 }
 
@@ -84,12 +84,7 @@ bool LinkedListStack::Contains(int value)
 /// </summary>
 void LinkedListStack::PrintInfo()
 {
-	std::cout << "Top: " << m_items.Item(m_top) << std::endl;
-	std::cout << "Items: ";
-	for (size_t i = 0; i< m_items.Count(); i++)
-	{
-		std::cout << m_items.Item(i) << ", ";
-	}
-	std::cout << std::endl;
+	std::cout << "Top: " << m_items.Count() - 1 << std::endl;
+	m_items.PrintInfo();
 }
 #pragma endregion

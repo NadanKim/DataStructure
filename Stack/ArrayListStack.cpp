@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
 ArrayListStack::ArrayListStack(int capacity)
-	: m_top(0), m_items(capacity)
+	: m_items(capacity)
 {
 }
 
@@ -15,7 +15,7 @@ ArrayListStack::ArrayListStack(int capacity)
 /// </summary>
 /// <param name="other">기준이 될 ArrayListStack</param>
 ArrayListStack::ArrayListStack(const ArrayListStack& other)
-	: m_top(other.m_top), m_items(other.m_items)
+	: m_items(other.m_items)
 {
 }
 #pragma endregion
@@ -27,7 +27,6 @@ ArrayListStack::ArrayListStack(const ArrayListStack& other)
 /// <param name="value">추가할 값</param>
 void ArrayListStack::Push(int value)
 {
-	m_top += 1;
 	m_items.Add(value);
 }
 
@@ -37,12 +36,12 @@ void ArrayListStack::Push(int value)
 /// <returns>최상위에 있는 값</returns>
 int ArrayListStack::Peek()
 {
-	if (m_top <= 0)
+	if (m_items.Count() <= 0)
 	{
 		throw std::out_of_range("empty");
 	}
 
-	return m_items.Item(m_top - 1);
+	return m_items.Item(m_items.Count() - 1);
 }
 
 /// <summary>
@@ -51,13 +50,15 @@ int ArrayListStack::Peek()
 /// <returns>최상위에 있던 값</returns>
 int ArrayListStack::Pop()
 {
-	if (m_top <= 0)
+	if (m_items.Count() <= 0)
 	{
 		throw std::out_of_range("empty");
 	}
 
-	m_top--;
-	return m_items.Item(m_top);
+	int data{ m_items.Item(m_items.Count() - 1) };
+	m_items.RemoveAt(m_items.Count() - 1);
+
+	return data;
 }
 
 /// <summary>
@@ -65,7 +66,6 @@ int ArrayListStack::Pop()
 /// </summary>
 void ArrayListStack::Clear()
 {
-	m_top = 0;
 	m_items.Clear();
 }
 
@@ -84,12 +84,7 @@ bool ArrayListStack::Contains(int value)
 /// </summary>
 void ArrayListStack::PrintInfo()
 {
-	std::cout << "Top: " << m_items.Item(m_top) << std::endl;
-	std::cout << "Items: ";
-	for (size_t i = 0; i< m_items.Count(); i++)
-	{
-		std::cout << m_items.Item(i) << ", ";
-	}
-	std::cout << std::endl;
+	std::cout << "Top: " << m_items.Count() - 1 << std::endl;
+	m_items.PrintInfo();
 }
 #pragma endregion

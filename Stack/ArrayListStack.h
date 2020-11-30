@@ -27,7 +27,6 @@ public:
 
 private:
 #pragma region 변수
-	int m_top;
 	ArrayList m_items;
 #pragma endregion
 };
