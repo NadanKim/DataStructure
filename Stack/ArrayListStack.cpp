@@ -2,7 +2,7 @@
 
 #pragma region 생성자
 /// <summary>
-/// 비어있고 초기 용량을 가지는 ArrayListStack를 생성한다.
+/// 비어있고 초기 용량을 가지는 ArrayListStack을 생성한다.
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
 ArrayListStack::ArrayListStack(int capacity)
@@ -11,7 +11,7 @@ ArrayListStack::ArrayListStack(int capacity)
 }
 
 /// <summary>
-/// 다른 ArrayListStack와 동일한 값을 가지는 ArrayListStack를 생성한다.
+/// 다른 ArrayListStack과 동일한 값을 가지는 ArrayListStack을 생성한다.
 /// </summary>
 /// <param name="other">기준이 될 ArrayListStack</param>
 ArrayListStack::ArrayListStack(const ArrayListStack& other)

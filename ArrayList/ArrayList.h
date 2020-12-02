@@ -6,7 +6,7 @@ class ArrayList
 {
 public:
 #pragma region 생성자
-	ArrayList(int capacity = 10);
+	ArrayList(size_t capacity = 10);
 	ArrayList(const ArrayList& other);
 	~ArrayList();
 #pragma endregion
@@ -24,7 +24,7 @@ public:
 #pragma endregion
 
 #pragma region 메서드
-	int Add(int value);
+	size_t Add(int value);
 	void AddRange(const ArrayList& other);
 	void Insert(size_t index, int value);
 	void InsertRange(size_t index, const ArrayList& other);
@@ -43,7 +43,7 @@ public:
 
 private:
 #pragma region Class Util
-	bool IsNeedToResize(int insertCount = 1);
+	bool IsNeedToResize(size_t insertCount = 1);
 	void Resize();
 	void MoveToRight(size_t index, size_t insertCount = 1);
 	void MoveToLeft(size_t index, size_t removeCount = 1);

@@ -5,7 +5,7 @@
 /// 비어있고 초기 용량을 가지는 ArrayList를 생성한다.
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
-ArrayList::ArrayList(int capacity)
+ArrayList::ArrayList(size_t capacity)
 	: m_capacity(capacity), m_count(0)
 {
 	if (capacity < 0)
@@ -47,7 +47,7 @@ ArrayList::~ArrayList()
 /// </summary>
 /// <param name="value">추가할 값</param>
 /// <returns>값이 추가된 인덱스</returns>
-int ArrayList::Add(int value)
+size_t ArrayList::Add(int value)
 {
 	if (IsNeedToResize())
 	{
@@ -196,7 +196,7 @@ int ArrayList::IndexOf(int value)
 	{
 		if (m_items[i] == value)
 		{
-			return i;
+			return static_cast<int>(i);
 		}
 	}
 	return -1;
@@ -209,11 +209,11 @@ int ArrayList::IndexOf(int value)
 /// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::LastIndexOf(int value)
 {
-	for (int i = m_count - 1; i >= 0; i--)
+	for (size_t i = m_count - 1; i >= 0; i--)
 	{
 		if (m_items[i] == value)
 		{
-			return i;
+			return static_cast<int>(i);
 		}
 	}
 	return -1;
@@ -241,7 +241,7 @@ void ArrayList::PrintInfo(bool isShowAll)
 /// </summary>
 /// <param name="count">삽입할 값의 개수(기본: 1)</param>
 /// <returns>삽입 가능 여부</returns>
-bool ArrayList::IsNeedToResize(int insertCount)
+bool ArrayList::IsNeedToResize(size_t insertCount)
 {
 	return m_capacity < m_count + insertCount;
 }

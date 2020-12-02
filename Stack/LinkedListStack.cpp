@@ -2,14 +2,14 @@
 
 #pragma region 생성자
 /// <summary>
-/// 비어있고 초기 용량을 가지는 LinkedListStack를 생성한다.
+/// 비어있고 초기 용량을 가지는 LinkedListStack을 생성한다.
 /// </summary>
 LinkedListStack::LinkedListStack()
 {
 }
 
 /// <summary>
-/// 다른 LinkedListStack와 동일한 값을 가지는 LinkedListStack를 생성한다.
+/// 다른 LinkedListStack과 동일한 값을 가지는 LinkedListStack을 생성한다.
 /// </summary>
 /// <param name="other">기준이 될 LinkedListStack</param>
 LinkedListStack::LinkedListStack(const LinkedListStack& other)
@@ -53,10 +53,8 @@ int LinkedListStack::Pop()
 		throw std::out_of_range("empty");
 	}
 
-	SinglyLinkedListNode& topNode{ m_items.Front() };
-	int data{ topNode.m_data };
-
-	m_items.Remove(&topNode);
+	int data{ m_items.Front().m_data };
+	m_items.Remove(&m_items.Front());
 
 	return data;
 }
