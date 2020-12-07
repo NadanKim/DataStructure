@@ -153,6 +153,7 @@
     <ClCompile Include="LinkedList\SinglyCircularLinkedList.cpp" />
     <ClCompile Include="LinkedList\SinglyLinkedList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Queue\ArrayListQueue.cpp" />
     <ClCompile Include="Stack\ArrayListStack.cpp" />
     <ClCompile Include="Stack\LinkedListStack.cpp" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="LinkedList\DoublyLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyLinkedList.h" />
+    <ClInclude Include="Queue\ArrayListQueue.h" />
     <ClInclude Include="Stack\ArrayListStack.h" />
     <ClInclude Include="Stack\LinkedListStack.h" />
   </ItemGroup>

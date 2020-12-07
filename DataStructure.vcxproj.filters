@@ -23,6 +23,9 @@
     <ClCompile Include="Stack\LinkedListStack.cpp">
       <Filter>Stack</Filter>
     </ClCompile>
+    <ClCompile Include="Queue\ArrayListQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -33,6 +36,9 @@
     </Filter>
     <Filter Include="Stack">
       <UniqueIdentifier>{385ebff3-d6e4-4791-b251-4099626cc1e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{ba5ba4f3-8553-42e5-b2f7-9754faeee51c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="Stack\LinkedListStack.h">
       <Filter>Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue\ArrayListQueue.h">
+      <Filter>Queue</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

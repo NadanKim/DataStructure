@@ -84,7 +84,7 @@ bool ArrayListStack::Contains(int value)
 /// </summary>
 void ArrayListStack::PrintInfo()
 {
-	std::cout << "Top: " << m_items.Count() - 1 << std::endl;
+	std::cout << "Top: " << m_items.Count() << std::endl;
 	m_items.PrintInfo();
 }
 #pragma endregion
