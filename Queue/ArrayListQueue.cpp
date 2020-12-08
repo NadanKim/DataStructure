@@ -2,7 +2,7 @@
 
 #pragma region 생성자
 /// <summary>
-/// 비어있고 초기 용량을 가지는 ArrayListQueue을 생성한다.
+/// 비어있고 초기 용량을 가지는 ArrayListQueue를 생성한다.
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
 ArrayListQueue::ArrayListQueue(int capacity)
@@ -11,11 +11,11 @@ ArrayListQueue::ArrayListQueue(int capacity)
 }
 
 /// <summary>
-/// 다른 ArrayListQueue과 동일한 값을 가지는 ArrayListQueue을 생성한다.
+/// 다른 ArrayListQueue과 동일한 값을 가지는 ArrayListQueue를 생성한다.
 /// </summary>
 /// <param name="other">기준이 될 ArrayListQueue</param>
 ArrayListQueue::ArrayListQueue(const ArrayListQueue& other)
-	: m_rear(0), m_items(other.m_items)
+	: m_rear(other.m_rear), m_items(other.m_items)
 {
 }
 #pragma endregion
