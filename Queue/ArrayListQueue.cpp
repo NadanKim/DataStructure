@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="capacity">생성할 공간의 크기(기본: 10)</param>
 ArrayListQueue::ArrayListQueue(int capacity)
-	: m_rear(0), m_items(capacity)
+	: m_items(capacity)
 {
 }
 
@@ -15,14 +15,14 @@ ArrayListQueue::ArrayListQueue(int capacity)
 /// </summary>
 /// <param name="other">기준이 될 ArrayListQueue</param>
 ArrayListQueue::ArrayListQueue(const ArrayListQueue& other)
-	: m_rear(other.m_rear), m_items(other.m_items)
+	: m_items(other.m_items)
 {
 }
 #pragma endregion
 
 #pragma region 메서드
 /// <summary>
-/// ArrayListQueue의 맨 위에 값을 추가한다.
+/// ArrayListQueue의 끝 부분에 값을 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
 void ArrayListQueue::Enqueue(int value)
@@ -31,9 +31,9 @@ void ArrayListQueue::Enqueue(int value)
 }
 
 /// <summary>
-/// ArrayListQueue의 최상위 값을 제거하지 않고 반환한다.
+/// ArrayListQueue의 시작 부분을 제거하지 않고 반환한다.
 /// </summary>
-/// <returns>최상위에 있는 값</returns>
+/// <returns>시작 부분에 있는 값</returns>
 int ArrayListQueue::Peek()
 {
 	if (m_items.Count() <= 0)
@@ -41,13 +41,13 @@ int ArrayListQueue::Peek()
 		throw std::out_of_range("empty");
 	}
 
-	return m_items.Item(m_items.Count() - 1);
+	return m_items.Item(0);
 }
 
 /// <summary>
-/// ArrayListQueue의 최상위 값을 제거한 뒤 반환한다.
+/// ArrayListQueue의 시작 부분의 값을 제거한 뒤 반환한다.
 /// </summary>
-/// <returns>최상위에 있던 값</returns>
+/// <returns>시작 부분에 있던 값</returns>
 int ArrayListQueue::Dequeue()
 {
 	if (m_items.Count() <= 0)
@@ -55,8 +55,8 @@ int ArrayListQueue::Dequeue()
 		throw std::out_of_range("empty");
 	}
 
-	int data{ m_items.Item(m_items.Count() - 1) };
-	m_items.RemoveAt(m_items.Count() - 1);
+	int data{ m_items.Item(0) };
+	m_items.RemoveAt(0);
 
 	return data;
 }

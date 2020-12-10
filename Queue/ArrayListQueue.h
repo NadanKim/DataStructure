@@ -27,7 +27,6 @@ public:
 
 private:
 #pragma region 변수
-	size_t m_rear;
 	ArrayList m_items;
 #pragma endregion
 };
