@@ -31,5 +31,5 @@
     > [ArrayListQueue.h](https://github.com/NadanKim/DataStructure/blob/master/Queue/ArrayListQueue.h)   
     > [ArrayListQueue.cpp](https://github.com/NadanKim/DataStructure/blob/master/Queue/ArrayListQueue.cpp)   
   * 연결 리스트 큐(LinkedListQueue)
-    > LinkedListQueue.h   
-    > LinkedListQueue.cpp
+    > [LinkedListQueue.h](https://github.com/NadanKim/DataStructure/blob/master/Queue/LinkedListQueue.h)   
+    > [LinkedListQueue.cpp](https://github.com/NadanKim/DataStructure/blob/master/Queue/LinkedListQueue.cpp)   
