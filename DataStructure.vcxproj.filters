@@ -26,6 +26,9 @@
     <ClCompile Include="Queue\ArrayListQueue.cpp">
       <Filter>Queue</Filter>
     </ClCompile>
+    <ClCompile Include="Queue\LinkedListQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -64,6 +67,9 @@
       <Filter>Stack</Filter>
     </ClInclude>
     <ClInclude Include="Queue\ArrayListQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue\LinkedListQueue.h">
       <Filter>Queue</Filter>
     </ClInclude>
   </ItemGroup>
