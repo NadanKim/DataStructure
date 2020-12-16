@@ -84,7 +84,7 @@ bool ArrayListQueue::Contains(int value)
 /// </summary>
 void ArrayListQueue::PrintInfo()
 {
-	std::cout << "Top: " << m_items.Count() - 1 << std::endl;
+	std::cout << "Front: " << m_items.Count() - 1 << std::endl;
 	m_items.PrintInfo();
 }
 #pragma endregion

@@ -84,7 +84,7 @@ bool LinkedListQueue::Contains(int value)
 /// </summary>
 void LinkedListQueue::PrintInfo()
 {
-	std::cout << "Top: " << m_items.Count() - 1 << std::endl;
+	std::cout << "Front: " << m_items.Count() - 1 << std::endl;
 	m_items.PrintInfo();
 }
 #pragma endregion
