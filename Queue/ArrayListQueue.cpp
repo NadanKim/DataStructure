@@ -11,7 +11,7 @@ ArrayListQueue::ArrayListQueue(int capacity)
 }
 
 /// <summary>
-/// 다른 ArrayListQueue과 동일한 값을 가지는 ArrayListQueue를 생성한다.
+/// 다른 ArrayListQueue와 동일한 값을 가지는 ArrayListQueue를 생성한다.
 /// </summary>
 /// <param name="other">기준이 될 ArrayListQueue</param>
 ArrayListQueue::ArrayListQueue(const ArrayListQueue& other)
