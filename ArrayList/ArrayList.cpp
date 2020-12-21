@@ -209,7 +209,7 @@ int ArrayList::IndexOf(int value)
 /// <returns>값의 인덱스(없으면 -1)</returns>
 int ArrayList::LastIndexOf(int value)
 {
-	for (size_t i = m_count - 1; i >= 0; i--)
+	for (int i = static_cast<int>(m_count) - 1; i >= 0; i--)
 	{
 		if (m_items[i] == value)
 		{
