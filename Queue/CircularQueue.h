@@ -6,7 +6,7 @@ class CircularQueue
 {
 public:
 #pragma region 생성자
-	CircularQueue(int capacity = 10);
+	CircularQueue(size_t capacity = 10);
 	CircularQueue(const CircularQueue& other);
 #pragma endregion
 
@@ -31,7 +31,12 @@ public:
 
 	bool Contains(int value);
 
-	void PrintInfo();
+	void PrintInfo(bool isShowAll = false);
+#pragma endregion
+
+#pragma region Class Util
+	bool IsNeedToResize();
+	void Resize();
 #pragma endregion
 
 private:
