@@ -31,7 +31,7 @@ public:
 
 	bool Contains(int value);
 
-	void PrintInfo(bool isShowAll = false);
+	void PrintInfo();
 #pragma endregion
 
 #pragma region Class Util

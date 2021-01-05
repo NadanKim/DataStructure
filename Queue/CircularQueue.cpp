@@ -51,45 +51,46 @@ void CircularQueue::Enqueue(int value)
 	m_front = m_front % (m_capacity + 1);
 }
 
-///// <summary>
-///// CircularQueue의 시작 부분을 제거하지 않고 반환한다.
-///// </summary>
-///// <returns>시작 부분에 있는 값</returns>
-//int CircularQueue::Peek()
-//{
-//	if (m_items.Count() <= 0)
-//	{
-//		throw std::out_of_range("empty");
-//	}
-//
-//	return m_items.Item(0);
-//}
-//
-///// <summary>
-///// CircularQueue의 시작 부분의 값을 제거한 뒤 반환한다.
-///// </summary>
-///// <returns>시작 부분에 있던 값</returns>
-//int CircularQueue::Dequeue()
-//{
-//	if (m_items.Count() <= 0)
-//	{
-//		throw std::out_of_range("empty");
-//	}
-//
-//	int data{ m_items.Item(0) };
-//	m_items.RemoveAt(0);
-//
-//	return data;
-//}
-//
-///// <summary>
-///// CircularQueue의 모든 값을 제거한다.
-///// </summary>
-//void CircularQueue::Clear()
-//{
-//	m_items.Clear();
-//}
-//
+/// <summary>
+/// CircularQueue의 시작 부분을 제거하지 않고 반환한다.
+/// </summary>
+/// <returns>시작 부분에 있는 값</returns>
+int CircularQueue::Peek()
+{
+	if (m_count <= 0)
+	{
+		throw std::out_of_range("empty");
+	}
+
+	return m_items[m_rear];
+}
+
+/// <summary>
+/// CircularQueue의 시작 부분의 값을 제거한 뒤 반환한다.
+/// </summary>
+/// <returns>시작 부분에 있던 값</returns>
+int CircularQueue::Dequeue()
+{
+	if (m_count <= 0)
+	{
+		throw std::out_of_range("empty");
+	}
+
+	int data{ m_items[m_rear++] };
+	m_rear = m_rear % (m_capacity + 1);
+	m_count--;
+
+	return data;
+}
+
+/// <summary>
+/// CircularQueue의 모든 값을 제거한다.
+/// </summary>
+void CircularQueue::Clear()
+{
+	m_front = m_rear = m_count = 0;
+}
+
 ///// <summary>
 ///// CircularQueue에 지정한 값이 존재하는지 확인한다.
 ///// </summary>
@@ -103,16 +104,17 @@ void CircularQueue::Enqueue(int value)
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
-void CircularQueue::PrintInfo(bool isShowAll)
+void CircularQueue::PrintInfo()
 {
 	std::cout << "Capacity: " << m_capacity << std::endl;
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "front: " << m_front << std::endl;
 	std::cout << "rear: " << m_rear << std::endl;
 	std::cout << "Items: ";
-	for (size_t i = 0, limit = isShowAll ? m_capacity : m_count; i < m_count; i++)
+	for (size_t i = 0, j = m_rear; i < m_count; i++)
 	{
-		std::cout << m_items[i] << ", ";
+		std::cout << m_items[j] << ", ";
+		j = (j + 1) % (m_capacity + 1);
 	}
 	std::cout << std::endl;
 }

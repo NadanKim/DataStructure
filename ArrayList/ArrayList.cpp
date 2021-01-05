@@ -227,7 +227,7 @@ void ArrayList::PrintInfo(bool isShowAll)
 	std::cout << "Capacity: " << m_capacity << std::endl;
 	std::cout << "Count: " << m_count << std::endl;
 	std::cout << "Items: ";
-	for (size_t i = 0, limit = isShowAll ? m_capacity : m_count; i < m_count; i++)
+	for (size_t i = 0, limit = isShowAll ? m_capacity : m_count; i < limit; i++)
 	{
 		std::cout << m_items[i] << ", ";
 	}

@@ -14,4 +14,25 @@ int main()
 
 	q.Enqueue(3);
 	q.PrintInfo();
+
+	q.Peek();
+	q.PrintInfo();
+
+	q.Dequeue();
+	q.PrintInfo();
+
+	q.Dequeue();
+	q.PrintInfo();
+
+	q.Dequeue();
+	q.PrintInfo();
+
+	q.Enqueue(1);
+	q.PrintInfo();
+
+	q.Enqueue(2);
+	q.PrintInfo();
+
+	q.Enqueue(3);
+	q.PrintInfo();
 }
