@@ -91,15 +91,24 @@ void CircularQueue::Clear()
 	m_front = m_rear = m_count = 0;
 }
 
-///// <summary>
-///// CircularQueue에 지정한 값이 존재하는지 확인한다.
-///// </summary>
-///// <param name="value">CircularQueue에서 찾을 값</param>
-///// <returns>값의 존재 여부</returns>
-//bool CircularQueue::Contains(int value)
-//{
-//	return m_items.Contains(value);
-//}
+/// <summary>
+/// CircularQueue에 지정한 값이 존재하는지 확인한다.
+/// </summary>
+/// <param name="value">CircularQueue에서 찾을 값</param>
+/// <returns>값의 존재 여부</returns>
+bool CircularQueue::Contains(int value)
+{
+	for (size_t i = 0, j = m_rear; i < m_count; i++)
+	{
+		if (m_items[j] == value)
+		{
+			return true;
+		}
+
+		j = (j + 1) % (m_capacity + 1);
+	}
+	return false;
+}
 
 /// <summary>
 /// 테스트용 리스트 정보 출력 함수
