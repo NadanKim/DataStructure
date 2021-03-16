@@ -33,3 +33,7 @@
   * 연결 리스트 큐(LinkedListQueue)
     > [LinkedListQueue.h](https://github.com/NadanKim/DataStructure/blob/master/Queue/LinkedListQueue.h)   
     > [LinkedListQueue.cpp](https://github.com/NadanKim/DataStructure/blob/master/Queue/LinkedListQueue.cpp)   
+* 트리
+  * 이진 탐색 트리(BinarySearchTree)
+    > [BinarySearchTree.h](https://github.com/NadanKim/DataStructure/blob/master/BinarySearchTree/BinarySearchTree.h)   
+    > [BinarySearchTree.cpp](https://github.com/NadanKim/DataStructure/blob/master/BinarySearchTree/BinarySearchTree.cpp)   
