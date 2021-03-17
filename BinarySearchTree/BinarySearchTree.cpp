@@ -14,6 +14,14 @@ BinarySearchTree::BinarySearchTree()
 /// </summary>
 BinarySearchTree::~BinarySearchTree()
 {
+	Clear();
+
+	while (m_free != nullptr)
+	{
+		Node* curNode{ m_free };
+		m_free = m_free->m_right;
+		delete curNode;
+	}
 }
 #pragma endregion
 
@@ -24,7 +32,31 @@ BinarySearchTree::~BinarySearchTree()
 /// <param name="value">추가할 값</param>
 void BinarySearchTree::Insert(int value)
 {
+	
+	Node** target{ &m_root };
+	while (*target != nullptr)
+	{
+		if ((*target)->m_data == value)
+		{
+			target = nullptr;
+			break;
+		}
 
+		if ((*target)->m_data > value)
+		{
+			target = &((*target)->m_left);
+		}
+		else
+		{
+			target = &((*target)->m_right);
+		}
+	}
+
+	if (target != nullptr)
+	{
+		*target = PopNode(value);
+		m_count++;
+	}
 }
 
 /// <summary>
@@ -50,7 +82,7 @@ void BinarySearchTree::Clear()
 /// <param name="value">검색할 값</param>
 bool BinarySearchTree::Search(int value)
 {
-
+	return false;
 }
 
 /// <summary>
@@ -58,7 +90,29 @@ bool BinarySearchTree::Search(int value)
 /// </summary>
 void BinarySearchTree::PrintInfo()
 {
+	std::cout << "----------------------\n";
+	PrintInfo(m_root);
+	std::cout << "----------------------\n\n";
+}
 
+/// <summary>
+/// 테스트용 리스트 정보 출력 함수
+/// </summary>
+void BinarySearchTree::PrintInfo(Node* node, size_t depth)
+{
+	if (node == nullptr)
+	{
+		return;
+	}
+
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << "  ";
+	}
+	std::cout << "└  " << node->m_data << '\n';
+
+	PrintInfo(node->m_left, depth + 1);
+	PrintInfo(node->m_right, depth + 1);
 }
 #pragma endregion
 
@@ -78,10 +132,10 @@ BinarySearchTree::Node* BinarySearchTree::PopNode(int value)
 	else
 	{
 		newNode = m_free;
-		m_free = m_free->m_next;
+		m_free = m_free->m_right;
 
 		newNode->m_data = value;
-		newNode->m_next = nullptr;
+		newNode->m_right = nullptr;
 	}
 
 	return newNode;
@@ -93,8 +147,8 @@ BinarySearchTree::Node* BinarySearchTree::PopNode(int value)
 /// <param name="node">제거된 노드</param>
 void BinarySearchTree::PushNode(Node* node)
 {
-	node->m_prev = nullptr;
-	node->m_next = m_free;
+	node->m_left = nullptr;
+	node->m_right = m_free;
 	m_free = node;
 }
 #pragma endregion

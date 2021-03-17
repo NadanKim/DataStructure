@@ -11,8 +11,8 @@ public:
 		Node(int value) { m_data = value; }
 
 		int m_data{ 0 };
-		Node* m_prev{ nullptr };
-		Node* m_next{ nullptr };
+		Node* m_left{ nullptr };
+		Node* m_right{ nullptr };
 	};
 #pragma endregion
 
@@ -36,6 +36,8 @@ public:
 	bool Search(int value);
 
 	void PrintInfo();
+private:
+	void PrintInfo(Node* node, size_t depth = 0);
 #pragma endregion
 
 private:
