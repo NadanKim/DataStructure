@@ -22,4 +22,7 @@ int main()
 
 	bst.Insert(9);
 	bst.PrintInfo();
+
+	bst.Delete(5);
+	bst.PrintInfo();
 }
