@@ -2,7 +2,7 @@
 
 #pragma region 생성자
 /// <summary>
-/// 비어있는 DoublyLinkedList를 생성한다.
+/// 비어있는 BinarySearchTree를 생성한다.
 /// </summary>
 BinarySearchTree::BinarySearchTree()
 	: m_count(0), m_max(0), m_min(0), m_root(nullptr), m_free(nullptr)
@@ -65,91 +65,89 @@ void BinarySearchTree::Insert(int value)
 /// <param name="value">제거할 값</param>
 void BinarySearchTree::Delete(int value)
 {
-	Node** target{ &m_root };
+	if (m_root == nullptr)
+	{
+		return;
+	}
+
+	Node* target{ m_root };
 	Node* parent{ nullptr };
-
-	while (*target != nullptr)
+	while ((target != nullptr) && (target->m_data != value))
 	{
-		if ((*target)->m_data == value)
+		parent = target;
+		if (target->m_data > value)
 		{
-			break;
-		}
-
-		if ((*target)->m_data > value)
-		{
-			parent = *target;
-			target = &((*target)->m_left);
+			target = target->m_left;
 		}
 		else
 		{
-			parent = *target;
-			target = &((*target)->m_right);
+			target = target->m_right;
 		}
 	}
 
-	if (parent == nullptr)
+	if (target == nullptr)
 	{
-		parent = m_root;
+		return;
 	}
 
-	Node* deleteNode{ *target };
-
-	if (target != nullptr && *target != nullptr)
+	if (target->m_left == nullptr && target->m_right == nullptr)
 	{
-		if ((*target)->m_left != nullptr && (*target)->m_right == nullptr || (*target)->m_left == nullptr && (*target)->m_right != nullptr)
+		if (parent == nullptr)
 		{
-			Node* child{ (*target)->m_left != nullptr ? (*target)->m_left : (*target)->m_right };
-			if (parent->m_left == (*target))
-			{
-				parent->m_left = child;
-			}
-			else if (parent->m_right == (*target))
-			{
-				parent->m_right = child;
-			}
+			m_root = nullptr;
 		}
-		else if ((*target)->m_left != nullptr && (*target)->m_right != nullptr)
+		else if (parent->m_left == target)
 		{
-			parent = *target;
-			Node* child{ (*target)->m_left };
-			while (child->m_right != nullptr)
-			{
-				parent = child;
-				child = child->m_right;
-			}
-
-			(*target)->m_data = child->m_data;
-			target = &child;
-			deleteNode = *target;
-
-			if (child->m_left != nullptr)
-			{
-				if (parent->m_left == child)
-				{
-					parent->m_left = child->m_left;
-				}
-				else if (parent->m_right == child)
-				{
-					parent->m_right = child->m_left;
-				}
-			}
+			parent->m_left = nullptr;
 		}
 		else
 		{
-			
-			if (parent->m_left == (*target))
-			{
-				parent->m_left = nullptr;
-			}
-			else if (parent->m_right == (*target))
-			{
-				parent->m_right = nullptr;
-			}
+			parent->m_right = nullptr;
+		}
+	}
+	else if (target->m_left != nullptr && target->m_right == nullptr
+		 || target->m_left == nullptr && target->m_right != nullptr)
+	{
+		Node* child{ target->m_left != nullptr ? target->m_left : target->m_right };
+		
+		if (parent == nullptr)
+		{
+			m_root = child;
+		}
+		else if(parent->m_left == target)
+		{
+			parent->m_left = child;
+		}
+		else
+		{
+			parent->m_right = child;
+		}
+	}
+	else
+	{
+		parent = target;
+		Node* successor{ target->m_left };
+		
+		while (successor->m_right != nullptr)
+		{
+			parent = successor;
+			successor = successor->m_right;
 		}
 
-		PushNode(deleteNode);
-		m_count--;
+		if (parent->m_left == successor)
+		{
+			parent->m_left = successor->m_left;
+		}
+		else
+		{
+			parent->m_right = successor->m_left;
+		}
+
+		target->m_data = successor->m_data;
+		target = successor;
 	}
+
+	PushNode(target);
 }
 
 /// <summary>
