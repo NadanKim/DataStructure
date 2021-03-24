@@ -32,30 +32,38 @@ BinarySearchTree::~BinarySearchTree()
 /// <param name="value">추가할 값</param>
 void BinarySearchTree::Insert(int value)
 {
-	
-	Node** target{ &m_root };
-	while (*target != nullptr)
+	if (m_root == nullptr)
 	{
-		if ((*target)->m_data == value)
+		m_root = PopNode(value);
+		return;
+	}
+
+	Node* target{ m_root };
+	while (target != nullptr)
+	{
+		if (target->m_data == value)
 		{
-			target = nullptr;
 			break;
 		}
 
-		if ((*target)->m_data > value)
+		if (target->m_data > value)
 		{
-			target = &((*target)->m_left);
+			if (target->m_left == nullptr)
+			{
+				target->m_left = PopNode(value);
+				m_count++;
+			}
+			target = target->m_left;
 		}
 		else
 		{
-			target = &((*target)->m_right);
+			if (target->m_right == nullptr)
+			{
+				target->m_right = PopNode(value);
+				m_count++;
+			}
+			target = target->m_right;
 		}
-	}
-
-	if (target != nullptr)
-	{
-		*target = PopNode(value);
-		m_count++;
 	}
 }
 
