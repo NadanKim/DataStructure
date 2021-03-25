@@ -25,4 +25,10 @@ int main()
 
 	bst.Delete(5);
 	bst.PrintInfo();
+
+	std::cout << std::boolalpha << bst.Search(5) << '\n';
+	std::cout << std::boolalpha << bst.Search(9) << '\n';
+
+	bst.Clear();
+	bst.PrintInfo();
 }

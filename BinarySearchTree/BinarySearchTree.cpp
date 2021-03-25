@@ -163,7 +163,10 @@ void BinarySearchTree::Delete(int value)
 /// </summary>
 void BinarySearchTree::Clear()
 {
-	
+	while (m_root != nullptr)
+	{
+		Delete(m_root->m_data);
+	}
 }
 
 /// <summary>
@@ -172,7 +175,30 @@ void BinarySearchTree::Clear()
 /// <param name="value">검색할 값</param>
 bool BinarySearchTree::Search(int value)
 {
-	return false;
+	if (m_root == nullptr)
+	{
+		return false;
+	}
+
+	Node* target{ m_root };
+	while (target != nullptr)
+	{
+		if (target->m_data == value)
+		{
+			break;
+		}
+
+		if (target->m_data > value)
+		{
+			target = target->m_left;
+		}
+		else
+		{
+			target = target->m_right;
+		}
+	}
+
+	return target != nullptr;
 }
 
 /// <summary>
