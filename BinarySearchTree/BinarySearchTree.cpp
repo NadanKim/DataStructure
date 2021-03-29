@@ -5,7 +5,7 @@
 /// 비어있는 BinarySearchTree를 생성한다.
 /// </summary>
 BinarySearchTree::BinarySearchTree()
-	: m_count(0), m_max(0), m_min(0), m_root(nullptr), m_free(nullptr)
+	: m_count(0), m_root(nullptr), m_free(nullptr)
 {
 }
 

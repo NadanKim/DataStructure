@@ -23,8 +23,34 @@ public:
 
 #pragma region 속성
 	const size_t Count() { return m_count; }
-	const int Max() { return m_max; }
-	const int Min() { return m_min; }
+	const int Max()
+	{
+		if (m_root == nullptr)
+			return 0;
+
+		Node* target{ m_root };
+
+		while (target->m_left != nullptr)
+		{
+			target = target->m_left;
+		}
+
+		return target->m_data;
+	}
+	const int Min()
+	{
+		if (m_root == nullptr)
+			return 0;
+
+		Node* target{ m_root };
+
+		while (target->m_right != nullptr)
+		{
+			target = target->m_right;
+		}
+
+		return target->m_data;
+	}
 #pragma endregion
 
 #pragma region 메서드
@@ -48,8 +74,6 @@ private:
 
 #pragma region 변수
 	size_t m_count;
-	int m_min;
-	int m_max;
 
 	Node* m_root;
 	Node* m_free;
