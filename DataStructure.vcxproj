@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="ArrayList\ArrayList.cpp" />
     <ClCompile Include="BinarySearchTree\BinarySearchTree.cpp" />
+    <ClCompile Include="Graph\ArrayGraph.cpp" />
     <ClCompile Include="LinkedList\DoublyCircularLinkedList.cpp" />
     <ClCompile Include="LinkedList\DoublyLinkedList.cpp" />
     <ClCompile Include="LinkedList\SinglyCircularLinkedList.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="ArrayList\ArrayList.h" />
     <ClInclude Include="BinarySearchTree\BinarySearchTree.h" />
+    <ClInclude Include="Graph\ArrayGraph.h" />
     <ClInclude Include="LinkedList\DoublyCircularLinkedList.h" />
     <ClInclude Include="LinkedList\DoublyLinkedList.h" />
     <ClInclude Include="LinkedList\SinglyCircularLinkedList.h" />

@@ -35,6 +35,9 @@
     <ClCompile Include="BinarySearchTree\BinarySearchTree.cpp">
       <Filter>BinarySearchTree</Filter>
     </ClCompile>
+    <ClCompile Include="Graph\ArrayGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -51,6 +54,9 @@
     </Filter>
     <Filter Include="BinarySearchTree">
       <UniqueIdentifier>{206a6ceb-9781-4541-aa1e-958813ddb06d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph">
+      <UniqueIdentifier>{1f886432-48a5-4eb0-8cef-cba1e8f21658}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="BinarySearchTree\BinarySearchTree.h">
       <Filter>BinarySearchTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph\ArrayGraph.h">
+      <Filter>Graph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

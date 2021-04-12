@@ -27,7 +27,7 @@ BinarySearchTree::~BinarySearchTree()
 
 #pragma region 메서드
 /// <summary>
-/// 
+/// BinarySearchTree에 지정된 값을 추가한다.
 /// </summary>
 /// <param name="value">추가할 값</param>
 void BinarySearchTree::Insert(int value)
@@ -221,7 +221,7 @@ void BinarySearchTree::PrintInfo(Node* node, size_t depth)
 		return;
 	}
 
-	for (int i = 0; i < depth; i++)
+	for (size_t i = 0; i < depth; i++)
 	{
 		std::cout << "  ";
 	}
