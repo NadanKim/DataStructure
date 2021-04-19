@@ -35,7 +35,10 @@ ArrayGraph::~ArrayGraph()
 /// </summary>
 void ArrayGraph::InsertNode()
 {
-	
+	if (m_nodeCount < m_nodeCapacity)
+	{
+		m_nodeCount++;
+	}
 }
 
 /// <summary>
@@ -45,7 +48,12 @@ void ArrayGraph::InsertNode()
 /// <param name="to">³¡ ³ëµå</param>
 void ArrayGraph::InsertEdge(int from, int to)
 {
+	if (from < 0 || from >= m_nodeCount || to < 0 || to >= m_nodeCount)
+	{
+		return;
+	}
 
+	m_graph[from][to]++;
 }
 
 /// <summary>
@@ -99,6 +107,8 @@ size_t ArrayGraph::GetDegreeOut(int index)
 void ArrayGraph::PrintInfo()
 {
 	std::cout << "----------------------\n";
+	std::cout << "Capacity: " << m_nodeCapacity << '\n';
+	std::cout << "Count: " << m_nodeCount << '\n';
 	for (size_t i = 0; i < m_nodeCapacity; i++)
 	{
 		for (size_t j = 0; j < m_nodeCapacity; j++)

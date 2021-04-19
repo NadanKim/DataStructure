@@ -6,5 +6,13 @@ int main()
 {
 	ArrayGraph graph;
 
+	graph.InsertNode();
+	graph.InsertNode();
+	graph.PrintInfo();
+
+	graph.InsertEdge(0, 1);
+	graph.PrintInfo();
+
+	graph.InsertEdge(1, 1);
 	graph.PrintInfo();
 }
