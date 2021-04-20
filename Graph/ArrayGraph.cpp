@@ -62,7 +62,31 @@ void ArrayGraph::InsertEdge(int from, int to)
 /// <param name="value">제거할 값</param>
 void ArrayGraph::RemoveNode(int index)
 {
-	
+	if (index < 0 || index >= m_nodeCount)
+	{
+		return;
+	}
+
+	for (int i = index; i < m_nodeCount - 1; i++)
+	{
+		for (int j = 0; j < m_nodeCount; j++)
+		{
+			m_graph[i][j] = m_graph[i + 1][j];
+		}
+
+		for (int j = 0; j < m_nodeCount; j++)
+		{
+			m_graph[j][i] = m_graph[j][i + 1];
+		}
+	}
+
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		m_graph[i][m_nodeCount - 1] = 0;
+		m_graph[m_nodeCount - 1][i] = 0;
+	}
+
+	m_nodeCount--;
 }
 
 /// <summary>
@@ -72,7 +96,15 @@ void ArrayGraph::RemoveNode(int index)
 /// <param name="to">끝 노드</param>
 void ArrayGraph::RemoveEdge(int from, int to)
 {
+	if (from < 0 || from >= m_nodeCount || to < 0 || to >= m_nodeCount)
+	{
+		return;
+	}
 
+	if (m_graph[from][to] > 0)
+	{
+		m_graph[from][to]--;
+	}
 }
 
 /// <summary>
@@ -80,7 +112,12 @@ void ArrayGraph::RemoveEdge(int from, int to)
 /// </summary>
 void ArrayGraph::Clear()
 {
-	
+	m_nodeCount = 0;
+
+	for (size_t i = 0; i < m_nodeCapacity; i++)
+	{
+		std::fill_n(m_graph[i], m_nodeCapacity, 0);
+	}
 }
 
 /// <summary>

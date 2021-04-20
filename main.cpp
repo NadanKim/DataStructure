@@ -8,11 +8,25 @@ int main()
 
 	graph.InsertNode();
 	graph.InsertNode();
-	graph.PrintInfo();
+	graph.InsertNode();
+	graph.InsertNode();
 
 	graph.InsertEdge(0, 1);
+	graph.InsertEdge(0, 3);
+	graph.InsertEdge(1, 1);
+	graph.InsertEdge(1, 2);
+	graph.InsertEdge(1, 3);
+	graph.InsertEdge(2, 0);
+	graph.InsertEdge(2, 3);
+	graph.InsertEdge(3, 0);
 	graph.PrintInfo();
 
-	graph.InsertEdge(1, 1);
+	graph.RemoveEdge(3, 0);
+	graph.PrintInfo();
+
+	graph.RemoveNode(1);
+	graph.PrintInfo();
+
+	graph.Clear();
 	graph.PrintInfo();
 }
