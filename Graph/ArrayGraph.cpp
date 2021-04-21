@@ -126,7 +126,18 @@ void ArrayGraph::Clear()
 /// <param name="index">노드의 인덱스</param>
 size_t ArrayGraph::GetDegreeIn(int index)
 {
-	return 0;
+	if (index < 0 || index >= m_nodeCount)
+	{
+		return -1;
+	}
+
+	int count{ 0 };
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		count += m_graph[i][index];
+	}
+
+	return count;
 }
 
 /// <summary>
@@ -135,7 +146,18 @@ size_t ArrayGraph::GetDegreeIn(int index)
 /// <param name="index">노드의 인덱스</param>
 size_t ArrayGraph::GetDegreeOut(int index)
 {
-	return 0;
+	if (index < 0 || index >= m_nodeCount)
+	{
+		return -1;
+	}
+
+	int count{ 0 };
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		count += m_graph[index][i];
+	}
+
+	return count;
 }
 
 /// <summary>
@@ -156,7 +178,4 @@ void ArrayGraph::PrintInfo()
 	}
 	std::cout << "----------------------\n\n";
 }
-#pragma endregion
-
-#pragma region Class Util
 #pragma endregion

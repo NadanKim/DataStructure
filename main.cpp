@@ -21,11 +21,17 @@ int main()
 	graph.InsertEdge(3, 0);
 	graph.PrintInfo();
 
+	std::cout << graph.GetDegreeIn(2) << ' ' << graph.GetDegreeOut(2) << '\n';
+
 	graph.RemoveEdge(3, 0);
 	graph.PrintInfo();
 
+	std::cout << graph.GetDegreeIn(2) << ' ' << graph.GetDegreeOut(2) << '\n';
+
 	graph.RemoveNode(1);
 	graph.PrintInfo();
+
+	std::cout << graph.GetDegreeIn(2) << ' ' << graph.GetDegreeOut(2) << '\n';
 
 	graph.Clear();
 	graph.PrintInfo();
