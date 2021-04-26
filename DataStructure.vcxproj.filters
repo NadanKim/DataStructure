@@ -38,6 +38,9 @@
     <ClCompile Include="Graph\ArrayGraph.cpp">
       <Filter>Graph</Filter>
     </ClCompile>
+    <ClCompile Include="Graph\ArrayListGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ArrayList">
@@ -94,6 +97,9 @@
       <Filter>BinarySearchTree</Filter>
     </ClInclude>
     <ClInclude Include="Graph\ArrayGraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph\ArrayListGraph.h">
       <Filter>Graph</Filter>
     </ClInclude>
   </ItemGroup>
