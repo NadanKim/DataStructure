@@ -25,6 +25,14 @@ ArrayListGraph::~ArrayListGraph()
 	{
 		GraphHeader* curHead{ m_graphHeaders };
 		m_graphHeaders = m_graphHeaders->m_next;
+
+		while (curHead->m_data != nullptr)
+		{
+			GraphNode* curNode{ curHead->m_data };
+			curHead->m_data = curNode->m_next;
+			delete curNode;
+		}
+
 		delete curHead;
 	}
 
@@ -79,7 +87,50 @@ void ArrayListGraph::InsertEdge(int from, int to)
 /// <param name="value">제거할 값</param>
 void ArrayListGraph::RemoveNode(int num)
 {
-	
+	if (!ContainsNode(num))
+	{
+		std::cout << "존재하지 않는 노드를 제거하려 하고 있습니다.\n";
+		return;
+	}
+
+	GraphHeader* curHeader{ m_graphHeaders };
+
+	while (curHeader != nullptr)
+	{
+		if (ContainsEdge(curHeader->m_idx, num))
+		{
+			RemoveEdge(curHeader->m_idx, num);
+		}
+
+		curHeader = curHeader->m_next;
+	}
+
+	GraphHeader* prevHeader{ nullptr };
+	curHeader = m_graphHeaders;
+
+	while (curHeader != nullptr)
+	{
+		if (curHeader->m_idx == num)
+		{
+			break;
+		}
+
+		prevHeader = curHeader;
+		curHeader = curHeader->m_next;
+	}
+
+	if (prevHeader == nullptr)
+	{
+		m_graphHeaders = curHeader->m_next;
+	}
+	else
+	{
+		prevHeader->m_next = curHeader->m_next;
+	}
+
+	PushHeader(curHeader);
+
+	m_nodeCount--;
 }
 
 /// <summary>
@@ -89,7 +140,38 @@ void ArrayListGraph::RemoveNode(int num)
 /// <param name="to">끝 노드</param>
 void ArrayListGraph::RemoveEdge(int from, int to)
 {
-	
+	if (!ContainsNode(from) || !ContainsNode(to))
+	{
+		std::cout << "존재하지 않는 에지를 제거하려 하고 있습니다.\n";
+		return;
+	}
+
+	GraphHeader* targetHeader{ GetTargetHeader(from) };
+
+	GraphNode* prevNode{ nullptr };
+	GraphNode* curNode{ targetHeader->m_data };
+
+	while (curNode != nullptr)
+	{
+		if (curNode->m_idx == to)
+		{
+			break;
+		}
+
+		prevNode = curNode;
+		curNode = curNode->m_next;
+	}
+
+	if (prevNode == nullptr)
+	{
+		targetHeader->m_data = curNode->m_next;
+	}
+	else
+	{
+		prevNode->m_next = curNode->m_next;
+	}
+
+	PushNode(curNode);
 }
 
 /// <summary>
@@ -97,7 +179,14 @@ void ArrayListGraph::RemoveEdge(int from, int to)
 /// </summary>
 void ArrayListGraph::Clear()
 {
-	
+	while (m_graphHeaders != nullptr)
+	{
+		GraphHeader* curHead{ m_graphHeaders };
+		m_graphHeaders = m_graphHeaders->m_next;
+		PushHeader(curHead);
+	}
+
+	m_nodeCount = 0;
 }
 
 /// <summary>
@@ -248,6 +337,13 @@ GraphHeader* ArrayListGraph::PopHeader(int value)
 /// <param name="node">제거된 헤더</param>
 void ArrayListGraph::PushHeader(GraphHeader* header)
 {
+	while (header->m_data != nullptr)
+	{
+		GraphNode* curNode{ header->m_data };
+		header->m_data = curNode->m_next;
+		PushNode(curNode);
+	}
+
 	header->m_next = m_freeHeaders;
 	m_freeHeaders = header;
 }

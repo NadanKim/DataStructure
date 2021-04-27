@@ -17,4 +17,12 @@ int main()
 	graph.InsertEdge(3, 4);
 
 	graph.PrintInfo();
+
+	graph.RemoveEdge(1, 4);
+
+	graph.PrintInfo();
+
+	graph.RemoveNode(2);
+
+	graph.PrintInfo();
 }
