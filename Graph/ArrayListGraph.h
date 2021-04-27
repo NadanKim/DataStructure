@@ -1,6 +1,17 @@
 #pragma once
 #include <iostream>
 
+struct GraphNode
+{
+	GraphNode(int value)
+		: m_idx(value), m_next(nullptr)
+	{
+	}
+
+	int m_idx;
+	GraphNode* m_next;
+};
+
 struct GraphHeader
 {
 	GraphHeader(int value)
@@ -11,17 +22,6 @@ struct GraphHeader
 	int m_idx;
 	GraphNode* m_data;
 	GraphHeader* m_next;
-};
-
-struct GraphNode
-{
-	GraphNode(int value)
-		: m_idx(value), m_next(nullptr)
-	{
-	}
-
-	int m_idx;
-	GraphNode* m_next;
 };
 
 class ArrayListGraph
@@ -37,15 +37,20 @@ public:
 #pragma endregion
 
 #pragma region ¸Þ¼­µå
-	void InsertNode();
+	void InsertNode(int num);
 	void InsertEdge(int from, int to);
 
-	void RemoveNode(int index);
+	void RemoveNode(int num);
 	void RemoveEdge(int from, int to);
 	void Clear();
 
 	size_t GetDegreeIn(int index);
 	size_t GetDegreeOut(int index);
+
+	bool ContainsNode(int num);
+	bool ContainsEdge(int from, int to);
+
+	GraphHeader* GetTargetHeader(int num);
 
 	void PrintInfo();
 #pragma endregion

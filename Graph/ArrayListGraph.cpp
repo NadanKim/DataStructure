@@ -5,7 +5,7 @@
 /// 지정된 크기 혹은 기본 크기의 ArrayListGraph를 생성한다.
 /// </summary>
 ArrayListGraph::ArrayListGraph()
-	: m_nodeCount(0), m_graphHeaders(nullptr), m_freeHeaders(nullptr)
+	: m_nodeCount(0), m_graphHeaders(nullptr), m_freeHeaders(nullptr), m_freeNodes(nullptr)
 {
 }
 
@@ -41,9 +41,18 @@ ArrayListGraph::~ArrayListGraph()
 /// <summary>
 /// ArrayListGraph에 노드를 추가한다.
 /// </summary>
-void ArrayListGraph::InsertNode()
+void ArrayListGraph::InsertNode(int num)
 {
+	if (ContainsNode(num))
+	{
+		return;
+	}
 
+	GraphHeader* newHeader{ PopHeader(num) };
+	newHeader->m_next = m_graphHeaders;
+	m_graphHeaders = newHeader;
+
+	m_nodeCount++;
 }
 
 /// <summary>
@@ -53,14 +62,22 @@ void ArrayListGraph::InsertNode()
 /// <param name="to">끝 노드</param>
 void ArrayListGraph::InsertEdge(int from, int to)
 {
+	if (ContainsEdge(from, to))
+	{
+		return;
+	}
 
+	GraphHeader* fromHeader{ GetTargetHeader(from) };
+	GraphNode* newNode{ PopNode(to) };
+	newNode->m_next = fromHeader->m_data;
+	fromHeader->m_data = newNode;
 }
 
 /// <summary>
 /// ArrayListGraph에서 지정된 인덱스의 노드를 제거한다.
 /// </summary>
 /// <param name="value">제거할 값</param>
-void ArrayListGraph::RemoveNode(int index)
+void ArrayListGraph::RemoveNode(int num)
 {
 	
 }
@@ -102,6 +119,74 @@ size_t ArrayListGraph::GetDegreeOut(int index)
 }
 
 /// <summary>
+/// 그래프에 지정된 숫자의 노드가 존재하는지 검사
+/// </summary>
+/// <param name="num">확인할 번호</param>
+/// <returns>노드 존재 여부</returns>
+bool ArrayListGraph::ContainsNode(int num)
+{
+	GraphHeader* curHead{ m_graphHeaders };
+	while (curHead != nullptr)
+	{
+		if (curHead->m_idx == num)
+		{
+			return true;
+		}
+		curHead = curHead->m_next;
+	}
+
+	return false;
+}
+
+/// <summary>
+/// 그래프에 시작 노드에서 끝 노드로의 에지가 존재하는지 검사
+/// </summary>
+/// <param name="from">시작 노드 번호</param>
+/// <param name="to">끝 노드 번호</param>
+/// <returns>에지 존재 여부</returns>
+bool ArrayListGraph::ContainsEdge(int from, int to)
+{
+	if (!ContainsNode(from) || !ContainsNode(to))
+	{
+		std::cout << "존재하지 않는 노드를 추가하려 하고 있습니다.\n";
+		return true;
+	}
+
+	GraphHeader* targetHeader{ GetTargetHeader(from) };
+	GraphNode* targetNode{ targetHeader->m_data };
+	while (targetNode != nullptr)
+	{
+		if (targetNode->m_idx == to)
+		{
+			return true;
+		}
+		targetNode = targetNode->m_next;
+	}
+
+	return false;
+}
+
+/// <summary>
+/// 지정된 번호의 헤더가 존재하는 경우 헤더 반환
+/// </summary>
+/// <param name="num">노드 번호</param>
+/// <returns>해당 번호의 노드(없으면 nullptr)</returns>
+GraphHeader* ArrayListGraph::GetTargetHeader(int num)
+{
+	GraphHeader* target{ m_graphHeaders };
+	while (target != nullptr)
+	{
+		if (target->m_idx == num)
+		{
+			break;
+		}
+		target = target->m_next;
+	}
+
+	return target;
+}
+
+/// <summary>
 /// 테스트용 리스트 정보 출력 함수
 /// </summary>
 void ArrayListGraph::PrintInfo()
@@ -126,6 +211,7 @@ void ArrayListGraph::PrintInfo()
 			}
 			std::cout << '\n';
 		}
+		curHeader = curHeader->m_next;
 	}
 	std::cout << "----------------------\n\n";
 }
