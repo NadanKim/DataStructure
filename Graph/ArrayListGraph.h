@@ -44,8 +44,8 @@ public:
 	void RemoveEdge(int from, int to);
 	void Clear();
 
-	size_t GetDegreeIn(int index);
-	size_t GetDegreeOut(int index);
+	size_t GetDegreeIn(int num);
+	size_t GetDegreeOut(int num);
 
 	bool ContainsNode(int num);
 	bool ContainsEdge(int from, int to);

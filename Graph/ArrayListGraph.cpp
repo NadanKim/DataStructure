@@ -192,19 +192,57 @@ void ArrayListGraph::Clear()
 /// <summary>
 /// 지정된 인덱스의 노드에 진입하는 차수를 반환한다.
 /// </summary>
-/// <param name="index">노드의 인덱스</param>
-size_t ArrayListGraph::GetDegreeIn(int index)
+/// <param name="num">노드의 번호</param>
+size_t ArrayListGraph::GetDegreeIn(int num)
 {
-	return 0;
+	if (!ContainsNode(num))
+	{
+		return -1;
+	}
+
+	int count{ 0 };
+	GraphHeader* curHead{ m_graphHeaders };
+
+	while (curHead != nullptr)
+	{
+		GraphNode* curNode{ curHead->m_data };
+		while (curNode != nullptr)
+		{
+			if (curNode->m_idx == num)
+			{
+				count++;
+			}
+			curNode = curNode->m_next;
+		}
+		curHead = curHead->m_next;
+	}
+
+	return count;
 }
 
 /// <summary>
 /// 지정된 인덱스의 노드에서 진출하는 차수를 반환한다.
 /// </summary>
-/// <param name="index">노드의 인덱스</param>
-size_t ArrayListGraph::GetDegreeOut(int index)
+/// <param name="num">노드의 번호</param>
+size_t ArrayListGraph::GetDegreeOut(int num)
 {
-	return 0;
+	GraphHeader* targetHeader{ GetTargetHeader(num) };
+
+	if (targetHeader == nullptr)
+	{
+		return -1;
+	}
+	
+	int count{ 0 };
+	GraphNode* targetNode = targetHeader->m_data;
+
+	while (targetNode != nullptr)
+	{
+		targetNode = targetNode->m_next;
+		count++;
+	}
+
+	return count;
 }
 
 /// <summary>

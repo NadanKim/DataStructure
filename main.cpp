@@ -18,9 +18,13 @@ int main()
 
 	graph.PrintInfo();
 
+	std::cout << graph.GetDegreeIn(1) << ' ' << graph.GetDegreeOut(1) << '\n';
+
 	graph.RemoveEdge(1, 4);
 
 	graph.PrintInfo();
+
+	std::cout << graph.GetDegreeIn(1) << ' ' << graph.GetDegreeOut(1) << '\n';
 
 	graph.RemoveNode(2);
 
